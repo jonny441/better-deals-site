@@ -95,7 +95,7 @@
   },
   {
    "d": "2026-11-18",
-   "pu": 0.3846,
+   "pu": 0.0556,
    "store": "Dollar General"
   }
  ],
@@ -131,7 +131,7 @@
   },
   {
    "d": "2026-11-18",
-   "pu": 0.1667,
+   "pu": 0.825,
    "store": "Dollar General"
   }
  ],
@@ -152,11 +152,6 @@
    "d": "2026-11-17",
    "pu": 0.0888,
    "store": "Costco "
-  },
-  {
-   "d": "2026-11-18",
-   "pu": 0.0888,
-   "store": "Costco "
   }
  ],
  "Trash bags": [
@@ -169,6 +164,77 @@
    "d": "2026-11-18",
    "pu": 0.536,
    "store": "Lowe's"
+  }
+ ],
+ "Face sunscreen": [],
+ "Azelaic acid": [],
+ "Niacinamide serum": [],
+ "BHA 2% leave-on": [],
+ "Vitamin C serum": [],
+ "Healing ointment": [],
+ "Hand soap": [
+  {
+   "d": "2026-11-18",
+   "pu": 0.1591,
+   "store": "CVS Pharmacy"
+  }
+ ],
+ "All-purpose cleaner": [
+  {
+   "d": "2026-11-18",
+   "pu": 0.025,
+   "store": "Dollar General"
+  }
+ ],
+ "Disinfecting wipes": [
+  {
+   "d": "2026-11-18",
+   "pu": 0.0296,
+   "store": "Menards"
+  }
+ ],
+ "Creatine": [],
+ "Whey protein": [],
+ "Vitamin D3": [],
+ "Magnesium glycinate": [],
+ "Fish oil": [],
+ "Zinc": [],
+ "Pain reliever": [
+  {
+   "d": "2026-11-18",
+   "pu": 0.002,
+   "store": "Dollar General"
+  }
+ ],
+ "Allergy relief": [
+  {
+   "d": "2026-11-18",
+   "pu": 0.4499,
+   "store": "Walgreens"
+  }
+ ],
+ "Eggs": [
+  {
+   "d": "2026-11-18",
+   "pu": 2.495,
+   "store": "Kroger"
+  }
+ ],
+ "Chicken breast": [
+  {
+   "d": "2026-11-18",
+   "pu": 2.49,
+   "store": "Giant Eagle"
+  }
+ ],
+ "Frozen berries": [],
+ "Kiwi": [],
+ "Walnuts": [],
+ "Almonds": [
+  {
+   "d": "2026-11-18",
+   "pu": 6.0,
+   "store": "Marc's"
   }
  ]
 }
