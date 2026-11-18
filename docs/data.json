@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T20:34",
+ "updated": "2026-11-18T01:36",
  "zip": "43213",
  "items": [
   {
@@ -243,6 +243,11 @@
      "d": "2026-11-17",
      "pu": 0.1667,
      "store": "CVS Pharmacy"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.1667,
+     "store": "CVS Pharmacy"
     }
    ]
   },
@@ -335,6 +340,11 @@
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 0.0625,
+     "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 0.0625,
      "store": "Dollar General"
     }
@@ -596,6 +606,11 @@
      "d": "2026-11-17",
      "pu": 1.0,
      "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 1.0,
+     "store": "Dollar General"
     }
    ]
   },
@@ -688,6 +703,11 @@
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 1.0,
+     "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 1.0,
      "store": "Dollar General"
     }
@@ -1018,6 +1038,11 @@
      "d": "2026-11-17",
      "pu": 0.1171,
      "store": "CVS Pharmacy"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.1171,
+     "store": "CVS Pharmacy"
     }
    ]
   },
@@ -1277,6 +1302,11 @@
      "d": "2026-11-17",
      "pu": 0.1171,
      "store": "CVS Pharmacy"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.1171,
+     "store": "CVS Pharmacy"
     }
    ]
   },
@@ -1534,6 +1564,11 @@
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 0.0625,
+     "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 0.0625,
      "store": "Dollar General"
     }
@@ -1958,6 +1993,11 @@
      "d": "2026-11-17",
      "pu": 0.3846,
      "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.3846,
+     "store": "Dollar General"
     }
    ]
   },
@@ -2155,6 +2195,11 @@
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 0.5967,
+     "store": "CVS Pharmacy"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 0.5967,
      "store": "CVS Pharmacy"
     }
@@ -2416,6 +2461,11 @@
      "d": "2026-11-17",
      "pu": 0.0824,
      "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.0824,
+     "store": "Dollar General"
     }
    ]
   },
@@ -2675,6 +2725,11 @@
      "d": "2026-11-17",
      "pu": 0.1667,
      "store": "Dollar General"
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.1667,
+     "store": "Dollar General"
     }
    ]
   },
@@ -2752,6 +2807,11 @@
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 0.6225,
+     "store": "Walmart"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 0.6225,
      "store": "Walmart"
     }
@@ -2938,6 +2998,11 @@
      "d": "2026-11-17",
      "pu": 0.0888,
      "store": "Costco "
+    },
+    {
+     "d": "2026-11-18",
+     "pu": 0.0888,
+     "store": "Costco "
     }
    ]
   },
@@ -3039,7 +3104,7 @@
      "per_unit": null,
      "note": "",
      "valid_to": "2026-11-22",
-     "image": "https://f.wishabi.net/page_items/439706684/1793977886/extra_large.jpg"
+     "image": "https://f.wishabi.net/page_items/439693049/1793977797/extra_large.jpg"
     },
     {
      "store": "Walgreens",
@@ -3054,12 +3119,17 @@
      "per_unit": null,
      "note": "",
      "valid_to": "2026-11-22",
-     "image": "https://f.wishabi.net/page_items/439693049/1793977797/extra_large.jpg"
+     "image": "https://f.wishabi.net/page_items/439706684/1793977886/extra_large.jpg"
     }
    ],
    "history": [
     {
      "d": "2026-11-17",
+     "pu": 0.536,
+     "store": "Lowe's"
+    },
+    {
+     "d": "2026-11-18",
      "pu": 0.536,
      "store": "Lowe's"
     }

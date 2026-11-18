@@ -4,11 +4,21 @@
    "d": "2026-11-17",
    "pu": 0.1667,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.1667,
+   "store": "CVS Pharmacy"
   }
  ],
  "Mouthwash": [
   {
    "d": "2026-11-17",
+   "pu": 0.0625,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 0.0625,
    "store": "Dollar General"
   }
@@ -18,11 +28,21 @@
    "d": "2026-11-17",
    "pu": 1.0,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 1.0,
+   "store": "Dollar General"
   }
  ],
  "Floss": [
   {
    "d": "2026-11-17",
+   "pu": 1.0,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 1.0,
    "store": "Dollar General"
   }
@@ -35,6 +55,11 @@
    "d": "2026-11-17",
    "pu": 0.1171,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.1171,
+   "store": "CVS Pharmacy"
   }
  ],
  "Conditioner": [
@@ -42,11 +67,21 @@
    "d": "2026-11-17",
    "pu": 0.1171,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.1171,
+   "store": "CVS Pharmacy"
   }
  ],
  "Body wash": [
   {
    "d": "2026-11-17",
+   "pu": 0.0625,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 0.0625,
    "store": "Dollar General"
   }
@@ -57,11 +92,21 @@
    "d": "2026-11-17",
    "pu": 0.3846,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.3846,
+   "store": "Dollar General"
   }
  ],
  "Bar soap": [
   {
    "d": "2026-11-17",
+   "pu": 0.5967,
+   "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 0.5967,
    "store": "CVS Pharmacy"
   }
@@ -71,11 +116,21 @@
    "d": "2026-11-17",
    "pu": 0.0824,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.0824,
+   "store": "Dollar General"
   }
  ],
  "Paper towels": [
   {
    "d": "2026-11-17",
+   "pu": 0.1667,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 0.1667,
    "store": "Dollar General"
   }
@@ -85,6 +140,11 @@
    "d": "2026-11-17",
    "pu": 0.6225,
    "store": "Walmart"
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.6225,
+   "store": "Walmart"
   }
  ],
  "Dish soap": [
@@ -92,11 +152,21 @@
    "d": "2026-11-17",
    "pu": 0.0888,
    "store": "Costco "
+  },
+  {
+   "d": "2026-11-18",
+   "pu": 0.0888,
+   "store": "Costco "
   }
  ],
  "Trash bags": [
   {
    "d": "2026-11-17",
+   "pu": 0.536,
+   "store": "Lowe's"
+  },
+  {
+   "d": "2026-11-18",
    "pu": 0.536,
    "store": "Lowe's"
   }
