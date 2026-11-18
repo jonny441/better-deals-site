@@ -405,6 +405,7 @@ def build(search_fn=flipp_search, pause=1.0):
         "updated": datetime.now().isoformat(timespec="minutes"),
         "zip": zip_code, "my_stores": my_stores,
         "items": out_items, "free": free_finds,
+        "guide": load_json(DATA / "guide.json", {}),
         "catalog": sorted(catalog.values(), key=lambda c: c["n"].lower()),
         "errors": errors,
     }, separators=(",", ":")))

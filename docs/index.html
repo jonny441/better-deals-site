@@ -114,12 +114,17 @@ function candidatesFor(text) {
   }
   if (!it || !out.some(c => c.kind === "ad")) {
     const need = w.filter(x => !["the","and","of","for","a"].includes(x));
+    const hits = [];
     for (const c of DATA.catalog || []) {
       const n = c.n.toLowerCase();
-      if (need.length && need.every(x => n.includes(x)))
-        out.push({ kind:"ad", store:c.s, type:c.t, product:c.n, shelf:c.p, off:c.o, net:c.net, size:null, pu:null,
-          unit:null, note:[c.note, c.post].filter(Boolean).join("; "), v:c.v });
+      if (need.length && need.every(x => new RegExp("\\b" + x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(n)))
+        hits.push({ c, rel: need.length / Math.max(words(c.n).filter(x => !/^\d/.test(x)).length, 1)
+          - (/(syrup|creamer|flavored|candy|cake|cookie|scented|candle|air freshener)/.test(n) && !need.some(x => n.includes(x) && /(syrup|creamer|candy|cake|cookie|candle)/.test(x)) ? 0.5 : 0) });
     }
+    const top = Math.max(0, ...hits.map(h => h.rel));
+    for (const { c, rel } of hits) if (rel >= top * 0.6)
+      out.push({ kind:"ad", store:c.s, type:c.t, product:c.n, shelf:c.p, off:c.o, net:c.net, size:null, pu:null,
+        unit:null, note:[c.note, c.post].filter(Boolean).join("; "), v:c.v });
   }
   return { item: it, cands: out, note };
 }
@@ -211,6 +216,8 @@ function renderPlan() {
         </table></div>`;
     }
     if (none.length) {
+      const guided = none.map(r => ({ r, cats: guideMatch(r.text) })).filter(x => x.cats.length);
+      for (const g of guided) out += `<div class="card"><div class="mute">For “${esc(g.r.text)}” — not a weekly-ad item:</div></div>` + g.cats.map(c => guideCard(c, true)).join("");
       out += `<div class="card"><div class="name">Not in this week's ads</div><div class="mute">Search these yourself or ask Claude.</div>
         <table>${none.map(r => `<tr><td>${esc(r.text)}</td><td><a target="_blank" rel="noopener" href="https://flipp.com/en-us/search/${encodeURIComponent(r.text)}?postal_code=${DATA.zip}">Flipp</a> ·
         <a target="_blank" rel="noopener" href="https://www.walmart.com/search?q=${encodeURIComponent(r.text)}">Walmart</a> ·
@@ -226,6 +233,123 @@ function renderPlan() {
   $("#go").onclick = run;
   $("#copy").onclick = () => { const t = $("#planout").dataset.text; if (t && navigator.clipboard) navigator.clipboard.writeText(t).catch(()=>{}); };
   run();
+}
+
+
+/* ---------- guide: where to buy, calendar, big buys, store rules ---------- */
+const G = () => DATA.guide || {};
+const today0 = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+const dayDiff = d => Math.round((d - today0()) / 864e5);
+const fmtDate = d => d.toLocaleDateString("en-US", { month:"short", day:"numeric" });
+const MONTHS = ["Every week / all year","January","February","March","April","May","June","July","August","September","October","November","December"];
+function eventDates(e) {
+  if (!e.start) return null;
+  const t = today0(); let y = t.getFullYear();
+  const mk = (md, yr) => { const [m, d] = md.split("-").map(Number); return new Date(yr, m - 1, d); };
+  let s = mk(e.start, y), en = mk(e.end || e.start, y);
+  if (en < s) en = mk(e.end, y + 1);
+  if (en < t) { s = mk(e.start, y + 1); en = mk(e.end || e.start, y + 1); if (en < s) en = mk(e.end, y + 2); }
+  return { s, e: en, days: dayDiff(s), active: s <= t && t <= en };
+}
+function eventText(e) { return [e.event, e.best_for, e.stores, e.category].join(" ").toLowerCase(); }
+function guideMatch(text) {
+  const t = " " + (text || "").toLowerCase() + " ";
+  return (G().where_to_buy || []).filter(c => c.keywords.some(k => t.includes(" " + k) || t.includes(k + " ") || t.trim() === k));
+}
+function eventsFor(cat) {
+  const first = cat.name.split(/[ ,(&]/)[0].toLowerCase();
+  return (G().calendar || []).filter(e => e.month && (cat.keywords.some(k => k.length > 3 && eventText(e).includes(k)) || e.category.toLowerCase().startsWith(first)))
+    .map(e => ({ ...e, d: eventDates(e) })).filter(e => e.d).sort((a,b) => a.d.days - b.d.days);
+}
+function activeRebates(cat) {
+  if (!cat.rebate_category) return [];
+  return (G().rebates || []).filter(r => r.category === cat.rebate_category && dayDiff(new Date(r.ends + "T00:00")) >= 0)
+    .sort((a,b) => a.ends.localeCompare(b.ends));
+}
+function whenLabel(d) {
+  if (!d) return "";
+  if (d.active) { const left = dayDiff(d.e); return `<span class="pill BUY">on now · ends ${fmtDate(d.e)}${left <= 7 ? ` (${left}d left)` : ""}</span>`; }
+  return `<span class="pill ${d.days <= 30 ? "ok" : "none"}">in ${d.days} days · ${fmtDate(d.s)}</span>`;
+}
+const link = (name, url) => url ? `<a target="_blank" rel="noopener" href="${esc(url)}">${esc(name)}</a>` : esc(name);
+
+function guideCard(cat, compact) {
+  const ev = eventsFor(cat).slice(0, compact ? 2 : 4), rb = activeRebates(cat);
+  const steps = (G().stack_steps || {})[cat.rebate_category ? "Outdoor" : ""] || null;
+  const mem = (G().memberships || []).filter(m => cat.rebate_category && m.category === "Outdoor");
+  return `<div class="card"><div class="top"><span class="name">${esc(cat.name)}</span>${ev[0] ? whenLabel(ev[0].d) : ""}</div>
+    <div class="mute" style="margin-top:4px">${esc(cat.tip || "")}</div>
+    <table><tr><th>Where</th><th>Best for</th></tr>${cat.stores.slice(0, compact ? 4 : 99).map(st => `<tr><td>${link(st.name, st.url)}</td><td class="mute">${esc(st.best_for)}</td></tr>`).join("")}</table>
+    ${ev.length ? `<div style="margin-top:8px"><b>Next sales</b>${ev.map(e => `<div class="mute">${whenLabel(e.d)} ${esc(e.event)} — ${esc(e.best_for)}</div>`).join("")}</div>` : ""}
+    ${rb.length ? `<div style="margin-top:8px"><b>Rebates active now (${rb.length})</b>${rb.slice(0, compact ? 3 : 99).map(r => `<div class="mute">${esc(r.brand)}: ${esc(r.offer)} · ends ${fmtDate(new Date(r.ends + "T00:00"))}</div>`).join("")}
+      <div class="mute">${(G().rebate_sources || []).map(x => link(x.name, x.url)).join(" · ")}</div></div>` : ""}
+    ${!compact && steps ? `<details><summary>How to stack a purchase</summary><ol class="mute">${steps.map(x => `<li>${esc(x)}</li>`).join("")}</ol></details>` : ""}
+    ${!compact && mem.length ? `<details><summary>Memberships</summary><table>${mem.map(m => `<tr><td>${esc(m.name)}<div class="mute">${esc(m.cost)}</div></td><td class="mute">${esc(m.value)}<br><b>${esc(m.verdict)}</b></td></tr>`).join("")}</table></details>` : ""}
+  </div>`;
+}
+
+function renderWhere() {
+  const saved = store.get("bd_where") || "";
+  $("#list").innerHTML = `<div class="card"><div class="name">Where to buy</div>
+    <div class="mute">Type anything (ammo, tires, dash cam, serum, desk) to see the best stores, the next sale and active rebates. Weekly drugstore and grocery deals are in “Plan my list”.</div>
+    <div class="row"><input id="wq" placeholder="What are you shopping for?" value="${esc(saved)}"></div></div><div id="wout" style="display:grid;gap:10px"></div>`;
+  const run = () => {
+    const q = $("#wq").value.trim(); store.set("bd_where", q);
+    const cats = q ? guideMatch(q) : (G().where_to_buy || []);
+    $("#wout").innerHTML = cats.length ? cats.map(c => guideCard(c, !q)).join("")
+      : `<div class="card mute">No category for “${esc(q)}” yet. Try Plan my list, or ask Claude to add it.</div>`;
+  };
+  $("#wq").addEventListener("input", run); run();
+}
+
+function renderCalendar() {
+  const cal = (G().calendar || []).map(e => ({ ...e, d: eventDates(e) }));
+  const cats = [...new Set(cal.map(e => e.category))].sort();
+  const pick = store.get("bd_calcat") || "";
+  const now = cal.filter(e => e.d && (e.d.active || e.d.days <= 45)).sort((a,b) => (a.d.active ? -1 : a.d.days) - (b.d.active ? -1 : b.d.days));
+  const f = e => !pick || e.category === pick;
+  const row = e => `<tr><td>${e.d ? whenLabel(e.d) : `<span class="mute">${esc(e.when)}</span>`}</td>
+    <td><b>${esc(e.event)}</b>${e.general ? ' <span class="mute">(typical)</span>' : ""}<div class="mute">${esc(e.stores)} · ${esc(e.category)}</div></td>
+    <td class="mute">${esc(e.best_for)}</td></tr>`;
+  const thisMonth = new Date().getMonth() + 1;
+  let html = `<div class="card"><div class="top"><span class="name">Shopping calendar</span>
+    <select id="calcat"><option value="">All categories</option>${cats.map(c => `<option ${c===pick?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
+    <div class="mute">Dates are typical yearly patterns — confirm each year. “Typical” rows are general retail patterns; the rest come from your project.</div></div>
+    <div class="card"><div class="name">On now and next 45 days</div><table>${now.filter(f).map(row).join("") || '<tr><td class="mute">Nothing in this category soon.</td></tr>'}</table></div>`;
+  for (let i = 0; i <= 12; i++) {
+    const m = (i === 0 ? 0 : ((thisMonth - 1 + i - 1) % 12) + 1);
+    const ev = cal.filter(e => e.month === m && f(e));
+    if (!ev.length) continue;
+    html += `<div class="card"><details ${m === thisMonth || m === 0 ? "open" : ""}><summary><b>${MONTHS[m]}</b> <span class="mute">(${ev.length})</span></summary>
+      <table>${ev.map(row).join("")}</table></details></div>`;
+  }
+  $("#list").innerHTML = html;
+  $("#calcat").onchange = e => { store.set("bd_calcat", e.target.value); renderCalendar(); };
+}
+
+function renderBigBuys() {
+  const bb = G().big_buys || [];
+  const types = [...new Set(bb.map(b => b.type))];
+  $("#list").innerHTML = types.map(t => `<div class="card"><div class="name">${esc(t)}</div><table>
+    <tr><th>Item</th><th class="num">Target</th><th class="num">Last seen</th><th>Buy by</th></tr>
+    ${bb.filter(b => b.type === t).map(b => { const under = b.target && b.current && b.current <= b.target;
+      const by = b.buy_by ? new Date(b.buy_by + "T00:00") : null, left = by ? dayDiff(by) : null;
+      const cats = guideMatch(b.item), ev = cats.length ? eventsFor(cats[0])[0] : null;
+      return `<tr><td>${esc(b.item)}<div class="mute">${esc(b.where)}${b.notes ? " · " + esc(b.notes) : ""}</div>
+        ${ev ? `<div class="mute">Next sale: ${esc(ev.event)} ${whenLabel(ev.d)}</div>` : ""}</td>
+        <td class="num">${b.target ? fmt(b.target) : "—"}</td>
+        <td class="num">${b.current ? fmt(b.current) : "—"}${under ? '<div><span class="pill BUY">under target</span></div>' : ""}</td>
+        <td>${by ? `${fmtDate(by)}${left != null && left >= 0 ? `<div class="mute">${left} days</div>` : '<div class="mute">passed</div>'}` : '<span class="mute">anytime</span>'}</td></tr>`; }).join("")}
+    </table></div>`).join("") + `<div class="card mute">“Last seen” prices are from your workbook (Nov 2026). Ask Claude to re-check any item.</div>`;
+}
+
+function renderRules() {
+  const r = G().store_rules || [], m = G().memberships || [];
+  $("#list").innerHTML = r.map(x => `<div class="card"><div class="name">${esc(x.store)}</div><table>
+    <tr><td class="mute">Goal</td><td>${esc(x.goal)}</td></tr><tr><td class="mute">What counts</td><td>${esc(x.counts)}</td></tr>
+    <tr><td class="mute">Stacking</td><td>${esc(x.stack)}</td></tr><tr><td class="mute">Watch out</td><td>${esc(x.watch)}</td></tr>
+    <tr><td class="mute">Fillers</td><td>${esc(x.fillers)}</td></tr></table></div>`).join("")
+    + `<div class="card"><div class="name">Memberships</div><table>${m.map(x => `<tr><td>${esc(x.name)}<div class="mute">${esc(x.category)} · ${esc(x.cost)}</div></td><td class="mute">${esc(x.value)}<br><b>${esc(x.verdict)}</b></td></tr>`).join("")}</table></div>`;
 }
 
 /* ---------- browse views ---------- */
@@ -276,8 +400,9 @@ function renderItems(q, stype, cat) {
 function render() {
   if (!DATA) return;
   document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.c === view));
-  $("#filters").style.display = view === "plan" ? "none" : "flex";
-  if (view === "plan") return renderPlan();
+  const special = { plan: renderPlan, where: renderWhere, calendar: renderCalendar, bigbuys: renderBigBuys, rules: renderRules };
+  $("#filters").style.display = special[view] ? "none" : "flex";
+  if (special[view]) return special[view]();
   const q = $("#q").value.trim().toLowerCase(), stype = $("#stype").value;
   let html = "";
   if (view === "free") html = renderFree(q, stype, true);
@@ -289,7 +414,7 @@ fetch("data.json?" + Date.now()).then(r => r.json()).then(d => {
   DATA = d;
   $("#updated").textContent = `Updated ${d.updated} · ZIP ${d.zip} · ${d.items.length} items tracked · ${(d.catalog||[]).length} ad items this week` + (d.errors?.length ? ` · ${d.errors.length} search errors` : "");
   const cats = [...new Set(d.items.map(i => i.category))];
-  const tabs = [["plan","Plan my list"],["all","All"],...cats.map(c=>[c,c]),["free","Free / near free"]];
+  const tabs = [["plan","Plan my list"],["where","Where to buy"],["calendar","Sales calendar"],["bigbuys","Big buys"],["all","All weekly deals"],...cats.map(c=>[c,c]),["free","Free / near free"],["rules","Store rules"]];
   $("#tabs").innerHTML = tabs.map(([c,l]) => `<button class="tab" data-c="${esc(c)}">${esc(l)}</button>`).join("");
   $("#tabs").onclick = e => { if (!e.target.dataset.c) return; view = e.target.dataset.c; render(); };
   const types = new Set(); d.items.forEach(i => i.offers.forEach(o => types.add(o.store_type))); d.free.forEach(f => types.add(f.store_type));

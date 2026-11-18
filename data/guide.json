@@ -1,0 +1,302 @@
+{
+  "_how_to_edit": "Reference data for the site: where to buy each kind of thing, rebates with end dates, the yearly sales calendar, big-buy watch list and store coupon rules. Sources: Better Deals project (outdoor-firearms-deals.md, master-deal-plan.md, store-directory.md) and workbook tabs (Yearly sales, Outdoor & firearms, Gear & Black Friday, Stores), Nov 2026. Calendar dates are typical patterns: confirm each year.",
+
+  "where_to_buy": [
+    {
+      "name": "Ammo",
+      "keywords": ["ammo", "ammunition", "9mm", "5.56", "223", ".22", "22lr", "22 lr", "308", "12 gauge", "shotgun shells", "rounds", "bullets", "hunting ammo", "defense ammo"],
+      "tip": "Search AmmoSeek first: prices vary $0.05–0.10 a round between stores ($50–100 on 1,000 rounds). Then check rebates. Store coupons usually exclude ammo, so rebates and points are the savings.",
+      "stores": [
+        {"name": "AmmoSeek (tracker)", "url": "https://ammoseek.com", "best_for": "Cheapest current price per round, by caliber"},
+        {"name": "Target Sports USA", "url": "https://www.targetsportsusa.com", "best_for": "Bulk .22 LR, 9mm, 5.56"},
+        {"name": "SGAmmo", "url": "https://www.sgammo.com", "best_for": "Low ammo prices"},
+        {"name": "Lucky Gunner", "url": "https://www.luckygunner.com", "best_for": "Reliable stock"},
+        {"name": "Palmetto State Armory", "url": "https://palmettostatearmory.com", "best_for": "Bulk ammo; big holiday sales"},
+        {"name": "Sportsman's Warehouse", "url": "https://www.sportsmans.com", "best_for": "In-store ammo"},
+        {"name": "Vance Outdoors (Columbus)", "url": "https://www.vanceoutdoors.com", "best_for": "Local pickup"}
+      ],
+      "rebate_category": "ammo"
+    },
+    {
+      "name": "Guns",
+      "keywords": ["gun", "guns", "pistol", "handgun", "rifle", "shotgun", "ar-15", "ar15", "revolver", "firearm", "glock", "sig", "p365", "smith & wesson", "ruger", "savage", "taurus"],
+      "tip": "Compare on Gun.deals, check the manufacturer rebate, and add shipping + the FFL transfer fee at Vance's before comparing online with in-store.",
+      "stores": [
+        {"name": "Gun.deals (tracker)", "url": "https://gun.deals", "best_for": "Gun price comparison across stores"},
+        {"name": "Palmetto State Armory", "url": "https://palmettostatearmory.com", "best_for": "AR-15s, PSA pistols; biggest Black Friday sale (~58% off)"},
+        {"name": "GrabAGun", "url": "https://grabagun.com", "best_for": "Popular guns at low prices"},
+        {"name": "Bud's Gun Shop", "url": "https://www.budsgunshop.com", "best_for": "Free gun shipping, price protection"},
+        {"name": "KYGUNCO", "url": "https://www.kygunco.com", "best_for": "Competitive gun prices"},
+        {"name": "Vance Outdoors (Columbus, Obetz, Hebron)", "url": "https://www.vanceoutdoors.com", "best_for": "Local, range, FFL transfers"}
+      ],
+      "rebate_category": "guns"
+    },
+    {
+      "name": "Gun parts, magazines & reloading",
+      "keywords": ["magazine", "magazines", "mags", "gun parts", "reloading", "brass", "optic", "scope", "red dot", "holster", "gun safe", "safe"],
+      "tip": "Brownells EDGE ($49.95/yr) only pays if you build or fix guns often.",
+      "stores": [
+        {"name": "Brownells", "url": "https://www.brownells.com", "best_for": "Parts, gunsmithing supplies"},
+        {"name": "MidwayUSA", "url": "https://www.midwayusa.com", "best_for": "Fast shipping, reloading; optics on July 4th"},
+        {"name": "Gun Mag Warehouse", "url": "https://gunmagwarehouse.com", "best_for": "Magazines"},
+        {"name": "Palmetto State Armory", "url": "https://palmettostatearmory.com", "best_for": "Bundles, optics"}
+      ],
+      "rebate_category": "parts"
+    },
+    {
+      "name": "Hunting, fishing & outdoor gear",
+      "keywords": ["hunting", "fishing", "rod", "reel", "trail cam", "trail camera", "boots", "camo", "tree stand", "binoculars", "camping", "outdoor gear", "bow"],
+      "tip": "Bass Pro/Cabela's Spring Fishing Classic (March) and Fall Hunting Classic (Aug–Sept) have trade-ins. Join the free points programs.",
+      "stores": [
+        {"name": "Bass Pro Shops", "url": "https://www.basspro.com", "best_for": "Hunting clothes, boots, trail cams, optics"},
+        {"name": "Cabela's", "url": "https://www.cabelas.com", "best_for": "Same as Bass Pro"},
+        {"name": "Sportsman's Warehouse", "url": "https://www.sportsmans.com", "best_for": "Hunting gear"},
+        {"name": "Sportsman's Guide", "url": "https://www.sportsmansguide.com", "best_for": "Gear and clothing (Buyer's Club 10% off)"}
+      ],
+      "rebate_category": "outdoor"
+    },
+    {
+      "name": "Skincare (serums, sunscreen, brand names)",
+      "keywords": ["serum", "the ordinary", "cerave", "cetaphil", "beauty of joseon", "k-beauty", "korean skincare", "paula's choice", "skincare", "retinol"],
+      "tip": "Drugstore basics (moisturizer, soap) are usually cheapest through CVS/Walgreens rewards: see your weekly deals. Serums and sunscreen: wait for Ulta 21 Days, The Ordinary sale or Black Friday. With tretinoin: no benzoyl peroxide or other retinoids.",
+      "stores": [
+        {"name": "Ulta", "url": "https://www.ulta.com", "best_for": "21 Days of Beauty (Mar, Sep), BOGO 50% on Black Friday"},
+        {"name": "Target", "url": "https://www.target.com", "best_for": "The Ordinary, CeraVe; Circle Week"},
+        {"name": "The Ordinary (DECIEM)", "url": "https://theordinary.com", "best_for": "Niacinamide; April and November sales"},
+        {"name": "YesStyle / Stylevana", "url": "https://www.yesstyle.com", "best_for": "K-beauty (Beauty of Joseon)"},
+        {"name": "TJ Maxx / Marshalls", "url": "https://tjmaxx.tjx.com", "best_for": "Brand skincare markdowns (check dates)"},
+        {"name": "Woot", "url": "https://www.woot.com", "best_for": "TruSkin, Bio-Oil flash deals (compare with Keepa first)"}
+      ]
+    },
+    {
+      "name": "Supplements & protein (bulk)",
+      "keywords": ["supplement", "supplements", "protein powder", "whey", "creatine", "vitamins", "fish oil", "magnesium", "nutricost", "optimum nutrition"],
+      "tip": "Sam's is usually cheapest everyday (see your item cards). Stock up 6 months' worth on Black Friday and Prime Day.",
+      "stores": [
+        {"name": "Sam's Club", "url": "https://www.samsclub.com", "best_for": "Everyday low: creatine, D3, fish oil, whey"},
+        {"name": "Vitacost", "url": "https://www.vitacost.com", "best_for": "20–25% sitewide sales"},
+        {"name": "iHerb", "url": "https://www.iherb.com", "best_for": "20–25% sitewide sales, NOW Foods"},
+        {"name": "Myprotein / Optimum Nutrition", "url": "https://us.myprotein.com", "best_for": "Protein 30–50% off on Black Friday"},
+        {"name": "Woot", "url": "https://www.woot.com", "best_for": "Nutricost flash deals"}
+      ]
+    },
+    {
+      "name": "Electronics & gear",
+      "keywords": ["dash cam", "printer", "headphones", "earbuds", "laptop", "monitor", "tv", "lamp", "adapter", "charger", "electronics", "3d printer", "isotunes", "camera"],
+      "tip": "Set Keepa or CamelCamelCamel alerts at your target. Stack: card offer → one cash-back portal → student discount → Citi card. Don't use the Amazon account signed in as Gustavo.",
+      "stores": [
+        {"name": "Keepa (Amazon price history)", "url": "https://keepa.com", "best_for": "Is this Amazon price actually low?"},
+        {"name": "Best Buy", "url": "https://www.bestbuy.com", "best_for": "Electronics; Mustang remote start installed"},
+        {"name": "Walmart", "url": "https://www.walmart.com", "best_for": "Walmart+ free shipping; flash deals"},
+        {"name": "Woot", "url": "https://www.woot.com", "best_for": "Amazon flash deals (check new vs refurbished)"},
+        {"name": "OSU Surplus", "url": "https://surplus.osu.edu", "best_for": "Monitors, desks, chairs; public sale 3rd Tuesday monthly"},
+        {"name": "Liquidation bin stores", "url": "", "best_for": "Liquidation Zone (3577 E Livingston, near you), Where Ya Bin (6020 Sawmill), BidFTA Bin Store (5865 Chantry): prices drop each day after restock"},
+        {"name": "BidFTA (online auctions)", "url": "https://www.bidfta.com", "best_for": "Tools, electronics; Columbus pickup"}
+      ]
+    },
+    {
+      "name": "Clothing, shoes & gym gear",
+      "keywords": ["shoes", "sneakers", "clothes", "clothing", "jacket", "gym clothes", "insoles", "jeans", "shirt", "hoodie", "boots"],
+      "tip": "Check UNiDAYS and Student Beans with your CSCC email first (Nike up to 40%, Gymshark 12%). Off-price stores are best on new-shipment days.",
+      "stores": [
+        {"name": "UNiDAYS / Student Beans", "url": "https://www.myunidays.com", "best_for": "Student discounts: Nike, Adidas, Gymshark, Journeys"},
+        {"name": "TJ Maxx / Marshalls", "url": "https://tjmaxx.tjx.com", "best_for": "Brand clothing, shoes, gym clothes"},
+        {"name": "Burlington / Ross / Gabe's", "url": "https://www.burlington.com", "best_for": "Cheap brand clothing and shoes"},
+        {"name": "Goodwill / Ohio Thrift", "url": "https://www.goodwillcolumbus.org", "best_for": "Color-tag sales; Goodwill Outlet"}
+      ]
+    },
+    {
+      "name": "Home, furniture & tools",
+      "keywords": ["furniture", "desk", "chair", "whiteboard", "tools", "home decor", "kitchen", "appliance", "mattress", "shelf", "building materials"],
+      "tip": "Try OSU Surplus and the bin stores before buying new. Mattresses and appliances: Memorial Day, Labor Day, Black Friday.",
+      "stores": [
+        {"name": "OSU Surplus (2650 Kenny Rd)", "url": "https://surplus.osu.edu", "best_for": "Desks, chairs, whiteboards; 3rd Tuesday sale, cards only"},
+        {"name": "HomeGoods", "url": "https://www.homegoods.com", "best_for": "Home goods markdowns"},
+        {"name": "Ollie's Bargain Outlet", "url": "https://www.ollies.us", "best_for": "Overstock household, tools, books"},
+        {"name": "Habitat for Humanity ReStore", "url": "https://www.habitat.org/restores", "best_for": "Building materials, furniture"},
+        {"name": "Liquidation bin stores", "url": "", "best_for": "Liquidation Zone (3577 E Livingston), Columbus Liquidation Center (4141 Refugee), CBUS Liquidators (794 Morrison)"}
+      ]
+    },
+    {
+      "name": "Car parts & tires (Mustang 235/55R17)",
+      "keywords": ["tire", "tires", "car parts", "brakes", "oil filter", "air filter", "wipers", "battery", "mustang", "auto parts", "remote start"],
+      "tip": "Add mount and balance (Walmart ~$12–15 a tire) to online tire prices before comparing. RockAuto charges shipping per warehouse, so pick parts from one warehouse. Sam's Plus has Sam's Garage tire savings.",
+      "stores": [
+        {"name": "RockAuto", "url": "https://www.rockauto.com", "best_for": "Filters, brakes, sensors, small parts"},
+        {"name": "Tire Rack", "url": "https://www.tirerack.com", "best_for": "Tire comparison, 235/55R17"},
+        {"name": "TireEasy", "url": "https://www.tireeasy.com", "best_for": "Tire prices"},
+        {"name": "SimpleTire", "url": "https://simpletire.com", "best_for": "Tire prices"},
+        {"name": "Sam's Club tires", "url": "https://www.samsclub.com/c/tires", "best_for": "Plus member tire savings"},
+        {"name": "Best Buy", "url": "https://www.bestbuy.com", "best_for": "Remote start (~$250 off installed on Black Friday)"}
+      ]
+    },
+    {
+      "name": "Cheap groceries (closeout & salvage)",
+      "keywords": ["pantry", "canned", "dry goods", "bulk food", "snacks", "groceries cheap", "closeout food"],
+      "tip": "Name brands at closeout prices; check dates. Your weekly ad deals are in the Plan my list tab.",
+      "stores": [
+        {"name": "ALDI", "url": "https://www.aldi.us", "best_for": "Nuts, berries, honey, rice; no coupons, Ibotta only"},
+        {"name": "Grocery Outlet (749 Bethel Rd)", "url": "https://groceryoutlet.com", "best_for": "Name-brand closeouts"},
+        {"name": "Marc's", "url": "https://www.marcs.com", "best_for": "Ohio discount grocery + drugstore closeouts"},
+        {"name": "Amish bent-and-dent stores", "url": "https://danielmount.com", "best_for": "Very cheap dry goods (Fredericktown/Mansfield; often cash only)"},
+        {"name": "Dollar Tree", "url": "https://www.dollartree.com", "best_for": "Vanicream minis, sunflower seeds, basics"}
+      ]
+    },
+    {
+      "name": "Food deals & freebies",
+      "keywords": ["fast food", "restaurant", "free food", "mcdonald's", "wendy's", "taco bell", "chick-fil-a", "burger king", "birthday"],
+      "tip": "Best deals are in each chain's app and change weekly. Join rewards programs for birthday freebies. Walmart+ gives 25% off Burger King digital orders.",
+      "stores": [
+        {"name": "McDonald's / Wendy's / Taco Bell / Burger King / Chick-fil-A apps", "url": "", "best_for": "Weekly app deals"},
+        {"name": "Columbus on the Cheap", "url": "https://columbusonthecheap.com", "best_for": "Local freebies and free events"}
+      ]
+    },
+    {
+      "name": "Fun & travel",
+      "keywords": ["zoo", "museum", "tickets", "travel", "flight", "hotel", "trip", "frontier", "gowild", "amtrak", "movies"],
+      "tip": "Library Culture Pass = free tickets (Columbus Zoo, Museum of Art, Franklin Park Conservatory, Clippers, Crew). Travel passes only pay with 3–4+ trips planned.",
+      "stores": [
+        {"name": "Columbus Library Culture Pass", "url": "https://columbusonthecheap.com/culture-passes-library", "best_for": "Free zoo, museum and game tickets"},
+        {"name": "Frontier GoWild", "url": "https://www.flyfrontier.com/gowild", "best_for": "Buy only on sale ($299–349 vs $599)"},
+        {"name": "SpareFare / Plans Change / Transfer Travel", "url": "https://www.sparefare.net", "best_for": "Resold hotels and packages (not flights)"}
+      ]
+    }
+  ],
+
+  "memberships": [
+    {"name": "Sportsman's Guide Buyer's Club", "category": "Outdoor", "cost": "$59.99/yr; 3-month intro $14.99", "value": "10% off most orders, 5% guns/ammo, free shipping $49+", "verdict": "Best one to try: intro before Black Friday, then cancel."},
+    {"name": "Brownells EDGE", "category": "Outdoor", "cost": "$49.95/yr", "value": "Free shipping and returns; may waive $10 FFL fee", "verdict": "Only if building or fixing guns often."},
+    {"name": "Target Sports USA Prime", "category": "Outdoor", "cost": "$95.99/yr", "value": "Free shipping, no minimum", "verdict": "Skip unless hundreds of rounds a month."},
+    {"name": "Vance's range membership (Obetz)", "category": "Outdoor", "cost": "$199/yr", "value": "Free Wednesdays, $11/hr other days", "verdict": "Worth it at ~2 range visits a month."},
+    {"name": "Bass Pro / Cabela's Outdoor Rewards", "category": "Outdoor", "cost": "Free", "value": "2% back in points", "verdict": "Join."},
+    {"name": "Sportsman's Warehouse Explorewards", "category": "Outdoor", "cost": "Free", "value": "1 point per $1", "verdict": "Join."},
+    {"name": "MidwayUSA Rewards", "category": "Outdoor", "cost": "Free", "value": "250 points = $5", "verdict": "Join. Points expire after 12 months with no purchase."},
+    {"name": "PSA Rewards", "category": "Outdoor", "cost": "Free", "value": "1 point per $1, gift cards", "verdict": "Join."},
+    {"name": "CVS ExtraCare Plus", "category": "Drugstore", "cost": "~$24/yr on the late-Nov deal ($48 normally) or $5/mo", "value": "$10 reward monthly, 20% off CVS Health brand", "verdict": "Join only on the half-price deal, if you shop CVS monthly."},
+    {"name": "Sam's Club Plus (with Walmart+)", "category": "Groceries", "cost": "Have it", "value": "Free shipping, 2% Sam's Cash, early hours, tire savings; Walmart+ fuel 10c/gal, Burger King 25% off", "verdict": "Active."}
+  ],
+
+  "rebates": [
+    {"brand": "Federal", "offer": "20% back on 2+ boxes of hunting ammo (max $60/household)", "category": "ammo", "ends": "2026-11-30"},
+    {"brand": "Remington", "offer": "20% back on 2+ boxes of hunting ammo (max $60)", "category": "ammo", "ends": "2026-11-30"},
+    {"brand": "Winchester", "offer": "25% back on hunting rifle ammo", "category": "ammo", "ends": "2026-11-30"},
+    {"brand": "Winchester", "offer": "25% back on personal defense ammo, 1+ box (max $150)", "category": "ammo", "ends": "2026-11-30"},
+    {"brand": "Norma", "offer": "$5 back per box of fall hunting ammo", "category": "ammo", "ends": "2026-11-30"},
+    {"brand": "Winchester / Browning / HEVI-Shot", "offer": "Waterfowl ammo: 25% back or $5 per 2 boxes", "category": "ammo", "ends": "2026-12-31"},
+    {"brand": "Savage", "offer": "$200 back on qualifying Model 110 or Impulse", "category": "guns", "ends": "2026-11-30"},
+    {"brand": "Savage", "offer": "$75 back on any Model 110 or Impulse rifle", "category": "guns", "ends": "2026-11-22"},
+    {"brand": "Beretta", "offer": "Up to $300 back on select pistols", "category": "guns", "ends": "2026-11-30"},
+    {"brand": "Heritage", "offer": "$25 back on Rough Rider revolver or Rancher rifle", "category": "guns", "ends": "2026-12-27"},
+    {"brand": "Taurus", "offer": "$30 back on TX or GX4 pistol, or Taurus/Rossi revolvers", "category": "guns", "ends": "2026-12-27"},
+    {"brand": "Smith & Wesson", "offer": "$75 back on M&P FPC 22 rifle", "category": "guns", "ends": "2026-12-31"},
+    {"brand": "Walther", "offer": "Free Vortex optic with PDP or PDP F-Series", "category": "guns", "ends": "2026-12-31"},
+    {"brand": "Sig Sauer", "offer": "Free sling bag with a new P365", "category": "guns", "ends": "2026-12-31"},
+    {"brand": "Springfield Armory", "offer": "Free XD-M Elite 10mm with select Model 2020 rifles", "category": "guns", "ends": "2026-12-31"},
+    {"brand": "Hornady Get Loaded", "offer": "Free bullets or brass with qualifying reloading gear", "category": "parts", "ends": "2026-12-31"},
+    {"brand": "Browning safes", "offer": "Up to $400 back on a new Browning safe", "category": "parts", "ends": "2026-12-31"}
+  ],
+  "rebate_sources": [
+    {"name": "Vance's rebate page (full current list)", "url": "https://www.sportsmansoutdoorsuperstore.com/rebates"},
+    {"name": "Federal", "url": "https://www.federalpremium.com/this-is-federal/rebates-and-promotions.html"},
+    {"name": "Smith & Wesson", "url": "https://www.smith-wesson.com/rebates"},
+    {"name": "Ruger", "url": "https://ruger.com/promotions"},
+    {"name": "Savage", "url": "https://savagearms.com/content?p=promos"}
+  ],
+  "stack_steps": {
+    "Outdoor": ["Check AmmoSeek or Gun.deals for the lowest price.", "Check Vance's rebate page for a manufacturer rebate on that brand.", "Buy during a store sale if one is coming within a few weeks (see the calendar).", "Be logged into that store's free points program.", "Online guns: add shipping + the FFL transfer fee before comparing with in-store.", "Submit the rebate right away; keep the receipt and UPC."],
+    "Online": ["Check Keepa/CamelCamelCamel: is it really low?", "Activate a card offer if you have one.", "Go through ONE cash-back portal (Capital One Shopping bonus first, else Rakuten).", "Add a student discount (UNiDAYS / Student Beans).", "Pay with the Citi card."]
+  },
+
+  "calendar": [
+    {"month": 0, "when": "Every week, Sun–Sat", "event": "CVS, Walgreens, Dollar General weekly ads", "stores": "CVS, Walgreens, DG", "category": "Drugstore & household", "best_for": "ExtraBucks, Register Rewards, DG digital coupons"},
+    {"month": 0, "when": "Every week, Wed–Tue", "event": "Kroger and ALDI weekly ads", "stores": "Kroger, ALDI", "category": "Groceries", "best_for": "Chicken, eggs, berries, nuts"},
+    {"month": 0, "when": "Every Saturday", "event": "Dollar General $5 off $25", "stores": "Dollar General", "category": "Drugstore & household", "best_for": "Household basket (in the DG app)"},
+    {"month": 0, "when": "3rd Tuesday of each month", "event": "OSU Surplus public sale", "stores": "OSU Surplus", "category": "Electronics & gear", "best_for": "Monitors, desks, chairs, whiteboards"},
+    {"month": 0, "when": "1st of each month", "event": "Regular-price refresh (scheduled task)", "stores": "Sam's, Walmart, Kroger, ALDI", "category": "Groceries", "best_for": "Keeps the site's comparisons honest"},
+    {"month": 0, "when": "All year", "event": "Kroger 4x fuel points on gift cards", "stores": "Kroger", "category": "Gift cards", "best_for": "Gift cards you'd buy anyway"},
+    {"month": 0, "when": "All year", "event": "Birthday freebies", "stores": "Restaurant apps, CVS ($3 EB)", "category": "Food & freebies", "best_for": "Free food"},
+
+    {"month": 1, "when": "Early January", "start": "01-01", "end": "01-15", "event": "After-Christmas clearance; New Year fitness sales", "stores": "Target, Walmart, all", "category": "General", "best_for": "Holiday items 50–90% off, gym gear, calendars, winter clothes"},
+    {"month": 1, "when": "January", "start": "01-01", "end": "01-31", "event": "White sales", "stores": "Target, Macy's, Kohl's, Walmart", "category": "Home", "best_for": "Sheets, towels, bedding", "general": true},
+    {"month": 1, "when": "January", "start": "01-05", "end": "01-31", "event": "Amtrak USA Rail Pass and Frontier GoWild sales", "stores": "Amtrak, Frontier", "category": "Travel", "best_for": "Travel passes (only with trips planned)"},
+    {"month": 1, "when": "Late Jan – March", "start": "01-20", "end": "03-31", "event": "Ammo slow season", "stores": "All ammo sellers", "category": "Outdoor & firearms", "best_for": "Ammo back to baseline prices"},
+    {"month": 2, "when": "Early February", "start": "02-01", "end": "02-10", "event": "Super Bowl week", "stores": "Walmart, Best Buy, Target", "category": "Electronics", "best_for": "TVs, snacks"},
+    {"month": 2, "when": "Feb 15–20", "start": "02-15", "end": "02-20", "event": "Valentine's clearance", "stores": "CVS, Walgreens, Target, Walmart", "category": "General", "best_for": "Candy and gifts 50–75% off", "general": true},
+    {"month": 2, "when": "Presidents Day weekend", "start": "02-13", "end": "02-17", "event": "Presidents Day sales", "stores": "Best Buy, Home Depot, Lowe's, mattress stores", "category": "Home", "best_for": "Mattresses, appliances, furniture", "general": true},
+    {"month": 3, "when": "March", "start": "03-01", "end": "03-31", "event": "Frozen Food Month", "stores": "Kroger, Meijer, Walmart", "category": "Groceries", "best_for": "Frozen vegetables, berries, meals: stock the freezer", "general": true},
+    {"month": 3, "when": "Early March (about 3 weeks)", "start": "03-01", "end": "03-22", "event": "Bass Pro / Cabela's Spring Fishing Classic", "stores": "Bass Pro, Cabela's", "category": "Outdoor & firearms", "best_for": "Fishing gear; rod and reel trade-ins"},
+    {"month": 3, "when": "March", "start": "03-01", "end": "03-21", "event": "Ulta 21 Days of Beauty (spring)", "stores": "Ulta", "category": "Skincare", "best_for": "50% off one brand a day: serums, sunscreen"},
+    {"month": 3, "when": "March – April 30", "start": "03-01", "end": "04-30", "event": "Spring gun rebates", "stores": "Savage, Colt, Kimber, Sig, S&W, Browning", "category": "Outdoor & firearms", "best_for": "Rebated guns"},
+    {"month": 4, "when": "Day after Easter", "start": "04-06", "end": "04-12", "event": "Easter clearance", "stores": "CVS, Walgreens, Target, Walmart", "category": "General", "best_for": "Candy 50–90% off (date moves with Easter)", "general": true},
+    {"month": 4, "when": "April", "start": "04-01", "end": "04-30", "event": "Target Circle Week (spring)", "stores": "Target", "category": "Household", "best_for": "Household and personal care stock-up"},
+    {"month": 4, "when": "April", "start": "04-01", "end": "04-30", "event": "DECIEM / The Ordinary sale; Sephora Savings Event", "stores": "The Ordinary, Ulta, Sephora", "category": "Skincare", "best_for": "Niacinamide and serums ~20–30% off"},
+    {"month": 5, "when": "Late May", "start": "05-20", "end": "05-31", "event": "Memorial Day sales", "stores": "All; PSA", "category": "General", "best_for": "Mattresses, appliances, outdoor gear, grills; carry guns"},
+    {"month": 5, "when": "May – June", "start": "05-01", "end": "06-30", "event": "Father's Day and summer gun rebates", "stores": "Savage Axis, Hornady", "category": "Outdoor & firearms", "best_for": "Rifles, reloading"},
+    {"month": 5, "when": "Late May – July", "start": "05-20", "end": "07-05", "event": "Grilling season meat sales", "stores": "Kroger, Meijer, ALDI", "category": "Groceries", "best_for": "Chicken, burgers, hot dogs, condiments: freeze extra", "general": true},
+    {"month": 6, "when": "Mid-June – July 5", "start": "06-15", "end": "07-05", "event": "July 4th gun sales", "stores": "PSA, Brownells, MidwayUSA", "category": "Outdoor & firearms", "best_for": "AR-15s, ammo, optics (2nd-biggest gun sale)"},
+    {"month": 7, "when": "July", "start": "07-08", "end": "07-17", "event": "Amazon Prime Day + Walmart Deals + Target Circle Week", "stores": "Amazon, Walmart, Target", "category": "Electronics", "best_for": "Electronics, supplements, protein, ISOtunes"},
+    {"month": 7, "when": "July 1 – Aug 31", "start": "07-01", "end": "08-31", "event": "Federal Protect & Save rebate", "stores": "Federal", "category": "Outdoor & firearms", "best_for": "Defensive handgun ammo (2+ boxes)"},
+    {"month": 7, "when": "After July 4th", "start": "07-05", "end": "07-31", "event": "Summer clearance", "stores": "Target, Walmart, Meijer", "category": "General", "best_for": "Grills, patio, pool and summer clothes", "general": true},
+    {"month": 8, "when": "Early August", "start": "08-01", "end": "08-03", "event": "Ohio sales tax holiday", "stores": "All Ohio stores", "category": "General", "best_for": "Clothes and school supplies tax-free (limits apply)"},
+    {"month": 8, "when": "July – August", "start": "07-15", "end": "08-31", "event": "Back to school", "stores": "Walmart, Target, Staples, Best Buy", "category": "Electronics", "best_for": "Laptops, notebooks, backpacks; student deals"},
+    {"month": 8, "when": "Aug 1 – Nov 30", "start": "08-01", "end": "11-30", "event": "Fall hunting ammo rebates", "stores": "Federal, Remington, Winchester", "category": "Outdoor & firearms", "best_for": "Hunting ammo 20–25% back"},
+    {"month": 8, "when": "Aug – Sept", "start": "08-08", "end": "09-15", "event": "Bass Pro / Cabela's Fall Hunting Classic", "stores": "Bass Pro, Cabela's", "category": "Outdoor & firearms", "best_for": "Hunting clothes, boots, trail cams, optics; trade-ins"},
+    {"month": 9, "when": "Early September", "start": "08-29", "end": "09-08", "event": "Labor Day sales", "stores": "All; PSA", "category": "General", "best_for": "Appliances, mattresses, tools; guns, mags"},
+    {"month": 9, "when": "September", "start": "09-01", "end": "09-21", "event": "Ulta 21 Days of Beauty (fall)", "stores": "Ulta", "category": "Skincare", "best_for": "50% off one brand a day"},
+    {"month": 9, "when": "September", "start": "09-01", "end": "09-30", "event": "New iPhone month", "stores": "Apple, carriers, Best Buy", "category": "Electronics", "best_for": "Last year's phones and accessories drop", "general": true},
+    {"month": 9, "when": "Sept – Oct", "start": "09-01", "end": "10-31", "event": "Savage rimfire and handgun rebates", "stores": "Savage", "category": "Outdoor & firearms", "best_for": "Up to $75 back"},
+    {"month": 10, "when": "October", "start": "10-06", "end": "10-12", "event": "Amazon Prime Big Deal Days; Target Circle Week", "stores": "Amazon, Target, Walmart", "category": "Electronics", "best_for": "Early holiday prices, electronics"},
+    {"month": 10, "when": "October – March", "start": "10-01", "end": "03-31", "event": "Soup and canned goods season", "stores": "Kroger, Meijer", "category": "Groceries", "best_for": "Canned soup, broth, beans at stock-up prices", "general": true},
+    {"month": 10, "when": "Late October", "start": "10-20", "end": "10-31", "event": "PSA Halloween sale", "stores": "Palmetto State Armory", "category": "Outdoor & firearms", "best_for": "Bundles, optics, ammo"},
+    {"month": 11, "when": "Nov 1–5", "start": "11-01", "end": "11-05", "event": "Halloween clearance", "stores": "CVS, Walgreens, Target, Walmart", "category": "General", "best_for": "Candy 50–90% off", "general": true},
+    {"month": 11, "when": "November – December", "start": "11-01", "end": "12-24", "event": "Baking season", "stores": "Kroger, ALDI, Meijer", "category": "Groceries", "best_for": "Flour, sugar, butter, baking supplies at yearly lows", "general": true},
+    {"month": 11, "when": "Nov 16", "start": "11-16", "end": "11-16", "event": "National Fast Food Day", "stores": "Fast food apps", "category": "Food & freebies", "best_for": "Free food"},
+    {"month": 11, "when": "Nov 19 – 30", "start": "11-19", "end": "11-30", "event": "Amazon Black Friday", "stores": "Amazon", "category": "Electronics", "best_for": "Gear list"},
+    {"month": 11, "when": "Nov 19 – 28", "start": "11-19", "end": "11-28", "event": "Best Buy Black Friday", "stores": "Best Buy", "category": "Electronics", "best_for": "Mustang remote start, electronics"},
+    {"month": 11, "when": "Nov 22 – 28", "start": "11-22", "end": "11-28", "event": "Target Black Friday week", "stores": "Target", "category": "General", "best_for": "Household, gear"},
+    {"month": 11, "when": "Nov 23 – 29", "start": "11-23", "end": "11-29", "event": "Walmart Black Friday (Walmart+ early access 12:01 a.m. ET Nov 23)", "stores": "Walmart", "category": "General", "best_for": "Gear list"},
+    {"month": 11, "when": "Nov 26 – 29", "start": "11-26", "end": "11-29", "event": "Sam's Club Black Friday", "stores": "Sam's Club", "category": "Supplements & protein", "best_for": "Supplements, protein, household"},
+    {"month": 11, "when": "Nov 27 – 30", "start": "11-27", "end": "11-30", "event": "Black Friday (Nov 27) and Cyber Monday (Nov 30)", "stores": "All stores", "category": "General", "best_for": "Gear list, shoes, skincare and supplement stock-ups"},
+    {"month": 11, "when": "Late Nov – Dec", "start": "11-27", "end": "12-31", "event": "CVS ExtraCare Plus ~50% off yearly", "stores": "CVS", "category": "Drugstore & household", "best_for": "~$24/yr instead of $48"},
+    {"month": 11, "when": "Black Friday – Dec 31", "start": "11-27", "end": "12-31", "event": "Biggest gun and ammo sales; holiday rebates", "stores": "All gun stores; PSA up to ~58% off", "category": "Outdoor & firearms", "best_for": "Guns, bulk ammo, safes"},
+    {"month": 12, "when": "December", "start": "12-02", "end": "12-31", "event": "Holiday gun rebates", "stores": "S&W long guns, Browning, safes", "category": "Outdoor & firearms", "best_for": "Rifles, safes"},
+    {"month": 12, "when": "Mid-December", "start": "12-10", "end": "12-20", "event": "Free shipping day / last-minute gift deals", "stores": "Most online stores", "category": "General", "best_for": "Free shipping, gift cards with bonus", "general": true},
+    {"month": 12, "when": "Christmas – New Year's", "start": "12-26", "end": "12-31", "event": "Year-end clearance; Brownells year-end sale", "stores": "All; Brownells", "category": "General", "best_for": "Wrapping, decor, toys 50–90% off; handguns, leftover stock"},
+    {"month": 12, "when": "A few weeks after deer season", "start": "12-10", "end": "01-15", "event": "Used and clearance hunting rifles", "stores": "Gun stores", "category": "Outdoor & firearms", "best_for": "Deer rifles, slug shotguns"}
+  ],
+
+  "big_buys": [
+    {"item": "Fragrance: clone scent (Club de Nuit Intense, Khamrah, Dossier) or roll-on oil", "type": "Gear", "target": 35, "current": null, "where": "Amazon / Walmart", "buy_by": "2026-12-01", "notes": "Now $30–50."},
+    {"item": "Viofo A229 Plus dash cam (front + rear)", "type": "Gear", "target": 160, "current": 189.99, "where": "Amazon", "buy_by": "2026-12-01", "notes": "Reddit top pick; handles heat. Avoid Garmin Mini 2."},
+    {"item": "Viofo A229 Pro 2CH dash cam", "type": "Gear", "target": 200, "current": null, "where": "Amazon", "buy_by": "2026-12-01", "notes": "Alternative to the Plus."},
+    {"item": "Wolfbox G840S mirror dash cam", "type": "Gear", "target": 120, "current": 139.99, "where": "Amazon", "buy_by": "2026-12-01", "notes": "Budget option."},
+    {"item": "Supportive shoes or insoles; gym clothes", "type": "Gear", "target": null, "current": null, "where": "Nike/Adidas (student), TJ Maxx, Burlington", "buy_by": "2026-12-01", "notes": "20–40% off + UNiDAYS / Student Beans."},
+    {"item": "Brother HL-L2405W laser printer", "type": "Gear", "target": 100, "current": 104.99, "where": "Walmart / Amazon / Best Buy", "buy_by": "2026-12-01", "notes": ""},
+    {"item": "Desk lamp (LED, warm/cool)", "type": "Gear", "target": 30, "current": 22.99, "where": "Walmart (Lepro)", "buy_by": "", "notes": "Already under target."},
+    {"item": "Whiteboard (statics and calculus)", "type": "Gear", "target": 30, "current": 26.99, "where": "Walmart (VUSIGN), Staples, thrift, OSU Surplus", "buy_by": "", "notes": "Already under target."},
+    {"item": "Goodr OG Polarized sunglasses", "type": "Gear", "target": 35, "current": null, "where": "goodr.com", "buy_by": "", "notes": "Pick #1 for driving glare. Full price is fine."},
+    {"item": "Wiley X Saint sunglasses", "type": "Gear", "target": 75, "current": null, "where": "Amazon / Wiley X", "buy_by": "2026-12-01", "notes": "Usually $92–103; wait for 20–30% off."},
+    {"item": "Mustang remote start (installed)", "type": "Gear", "target": null, "current": null, "where": "Best Buy", "buy_by": "2026-12-01", "notes": "About $250 off installed on Black Friday."},
+    {"item": "Wall or desk calendar", "type": "Gear", "target": 10, "current": null, "where": "Dollar Tree, Five Below", "buy_by": "2027-01-10", "notes": "Prices drop after New Year."},
+    {"item": "3D printer: Elegoo Centauri Carbon (CC2 Combo) / Bambu P1S", "type": "Future", "target": 260, "current": 299, "where": "Elegoo / Amazon", "buy_by": "", "notes": "Only with a project. Watch for a repeat $90-back bonus."},
+    {"item": "ISOtunes PRO 2.0 (shop work)", "type": "Future", "target": null, "current": null, "where": "Amazon", "buy_by": "", "notes": "20–30% off on Black Friday or Prime Day."},
+    {"item": "Protein powder (2–3 tubs)", "type": "Stock-up", "target": null, "current": 99.49, "where": "Myprotein, ON, Nutricost, Amazon, Sam's", "buy_by": "2026-12-01", "notes": "Target ~$0.05/g protein; Sam's ON ~$0.040/g."},
+    {"item": "Creatine, D3, magnesium, fish oil (6 months)", "type": "Stock-up", "target": null, "current": null, "where": "Vitacost, iHerb (20–25% sitewide), Sam's", "buy_by": "2026-12-01", "notes": ""},
+    {"item": "BHA, vitamin C serum, niacinamide (2 each)", "type": "Stock-up", "target": null, "current": null, "where": "Paula's Choice, Ulta, Target, Amazon", "buy_by": "2026-12-01", "notes": "BOGO 50% or 20–30% off."},
+    {"item": "Face sunscreen (2–3 tubes)", "type": "Stock-up", "target": 14, "current": null, "where": "Ulta, Amazon multi-packs", "buy_by": "2026-12-01", "notes": "~$14 per 50 ml target."},
+    {"item": "CVS ExtraCare Plus (yearly)", "type": "Membership", "target": 24, "current": null, "where": "CVS", "buy_by": "2026-11-30", "notes": "Half-price deal expected ~11/27; else $5/month."},
+    {"item": "Sportsman's Guide Buyer's Club 3-month intro", "type": "Membership", "target": 14.99, "current": null, "where": "sportsmansguide.com", "buy_by": "2026-11-26", "notes": "Buy before Black Friday, then cancel."}
+  ],
+
+  "store_rules": [
+    {"store": "Dollar General", "goal": "$5 off $25 (Saturdays, DG app)", "counts": "Pretax total after all discounts; clearance counts", "stack": "One DG digital coupon per item + Ibotta", "watch": "Can't combine with other DG storewide $2/$3/$5 coupons. Excludes milk, tobacco, alcohol, gift cards, propane. Plan max 5 coupons per transaction. DG coupons can't be unclipped.", "fillers": "Clearance (orange tags), toilet paper, dish soap, detergent, bar soap, toothpaste"},
+    {"store": "CVS", "goal": "Spend $X, get $Y ExtraBucks; $X off $Y ExtraCare coupons", "counts": "ExtraBucks deals use price before coupons", "stack": "One CVS coupon + one manufacturer coupon per item", "watch": "ExtraBucks can't exceed your total after coupons. Usually once per household per deal. Separate transactions so new ExtraBucks print.", "fillers": "CVS Health brand, toothpaste, deodorant, dish soap, tissues"},
+    {"store": "Walgreens", "goal": "Register Rewards (buy X, get $Y); $X off $Y coupons", "counts": "Usually the sale price", "stack": "One Walgreens coupon + one manufacturer coupon per item", "watch": "Register Rewards can't pay for the same deal. Items ≥ coupons + rewards (add a cheap filler). Rewards print in store only.", "fillers": "Walgreens brand, toothpaste, candy bar or gum"},
+    {"store": "Kroger", "goal": "Buy 5 save $X mix-and-match; digital coupons; fuel points", "counts": "Each promo item counts 1 toward the 5", "stack": "One manufacturer coupon per item + Kroger digital deal", "watch": "Digital coupons often one use per account. Clip before checkout; use your card or phone number.", "fillers": "Any item in the same mix-and-match"},
+    {"store": "ALDI", "goal": "None (no coupons)", "counts": "—", "stack": "Ibotta only", "watch": "Just compare unit prices.", "fillers": "Berries, nuts, kiwis, chicken"},
+    {"store": "Target", "goal": "Target Circle offers; buy $X get a $Y gift card", "counts": "Usually the sale price", "stack": "One Circle offer + one manufacturer coupon per item + Ibotta", "watch": "Gift card deals often exclude items bought with other promos. Circle Week has the deepest discounts.", "fillers": "Up & Up items, household basics"},
+    {"store": "Walmart", "goal": "None (no store coupons)", "counts": "—", "stack": "Manufacturer coupons + Ibotta; Walmart Cash", "watch": "Scan clearance in the app: the system price can be lower than the tag. Walmart+ free shipping, $35 delivery minimum.", "fillers": "—"},
+    {"store": "Sam's Club", "goal": "Instant Savings (monthly)", "counts": "—", "stack": "Instant Savings + Ibotta; Plus = 2% Sam's Cash", "watch": "Free shipping with Plus; club delivery $50 minimum.", "fillers": "—"},
+    {"store": "Online orders", "goal": "Portal cash back", "counts": "—", "stack": "One cash-back portal per order (Capital One Shopping bonus first, else Rakuten)", "watch": "Pay with the Citi card.", "fillers": "—"}
+  ]
+}
