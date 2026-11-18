@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "23 11 * * *"   # every day ~6:23 AM Columbus time
   workflow_dispatch: {}      # "Run workflow" button for a manual refresh
+  push:                      # re-run right away when you change your lists or the code
+    branches: [main]
+    paths: ["data/watchlist.json", "data/stores.json", "data/baseline.csv", "data/manual_offers.csv", "scripts/**", "docs/index.html"]
 
 permissions:
   contents: write
@@ -11,7 +14,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

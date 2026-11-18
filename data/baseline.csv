@@ -1,1 +1,41 @@
-item,store,regular_price,size,unit,checked
+item,store,product,regular_price,size,unit,checked
+Creatine,Sam's Club,Sports Research 825 g,18.98,825,g,2026-11-14
+Creatine,Walmart,Nutricost 300 g,12.48,300,g,2026-11-14
+Vitamin D3,Sam's Club,"Member's Mark 5,000 IU 400 ct",9.98,400,ct,2026-11-14
+Vitamin D3,Walmart,"Equate 2,000 IU 260 ct",9.88,260,ct,2026-11-14
+Magnesium glycinate,Sam's Club,Nature's Bounty 240 mg 180 ct,16.98,180,ct,2026-11-14
+Magnesium glycinate,Walmart,Spring Valley 200 mg 60 ct,7.77,60,ct,2026-11-14
+Fish oil,Sam's Club,Member's Mark 900 mg omega-3 150 ct,19.98,150,ct,2026-11-14
+Whey protein,Sam's Club,ON Gold Standard 5.47 lb,75.98,5.47,lb,2026-11-14
+Bar soap,Sam's Club,Dove Men+Care 14 ct,11.48,14,ct,2026-11-14
+Face moisturizer,Sam's Club,Cetaphil Cream 2 x 16 oz,19.78,32,oz,2026-11-14
+Face moisturizer,Walmart,CeraVe Cream 19 oz,18.96,19,oz,2026-11-14
+Face sunscreen,Sam's Club,"Neutrogena Clear Face SPF 50, 2 x 3 oz",18.98,6,oz,2026-11-14
+Laundry detergent,Sam's Club,all Free Clear 166 loads,16.98,166,load,2026-11-14
+Laundry detergent,Walmart,Great Value Free & Delicate 64 loads,10.12,64,load,2026-11-14
+Laundry detergent,Kroger,"Arm & Hammer Sensitive (sale, 8c/load)",13.00,162.5,load,2026-11-14
+Dish soap,Walmart,Great Value Ultra 70 oz,6.14,70,fl_oz,2026-11-14
+Dish soap,Sam's Club,Member's Mark Platinum (9.0c/fl oz),9.00,100,fl_oz,2026-11-14
+Toilet paper,Sam's Club,Member's Mark 45 rolls,24.76,45,roll,2026-11-14
+Toilet paper,Walmart,"Scott 1000, 12 rolls (1-ply, big rolls)",9.87,12,roll,2026-11-14
+Toilet paper,Kroger,Kroger Soft & Strong 30 mega,20.00,30,roll,2026-11-14
+Toothpaste,Sam's Club,Colgate MaxFresh 5 x 7.3 oz,9.98,36.5,oz,2026-11-14
+Toothpaste,Walmart,Colgate MaxFresh 4 x 6.3 oz,10.96,25.2,oz,2026-11-14
+Deodorant,Sam's Club,Degree 5 x 2.6 oz,9.98,13,oz,2026-11-14
+Deodorant,Walmart,Degree 2.6 oz,4.98,2.6,oz,2026-11-14
+Eggs,Sam's Club,Midwest Farms 7.5 dozen,14.32,7.5,dozen,2026-11-14
+Eggs,Walmart,Great Value large 18 ct,2.47,1.5,dozen,2026-11-14
+Eggs,Kroger,Kroger large 18 ct,2.65,1.5,dozen,2026-11-14
+Chicken breast,Sam's Club,Member's Mark boneless skinless (per lb),2.88,1,lb,2026-11-14
+Chicken breast,Walmart,Great Value 3 lb,9.84,3,lb,2026-11-14
+Chicken breast,Kroger,Heritage Farm boneless skinless (per lb),2.59,1,lb,2026-11-14
+Frozen berries,Sam's Club,Member's Mark triple berry 4 lb,11.97,4,lb,2026-11-14
+Frozen berries,Walmart,Great Value cherry berry 48 oz,7.62,3,lb,2026-11-14
+Frozen berries,Kroger,Private Selection triple berry 48 oz,12.99,3,lb,2026-11-14
+Walnuts,Sam's Club,Member's Mark 32 oz,6.67,2,lb,2026-11-14
+Walnuts,Walmart,Great Value 8 oz,5.28,0.5,lb,2026-11-14
+Walnuts,Kroger,Fisher 22 oz (sale),18.29,1.375,lb,2026-11-14
+Almonds,Sam's Club,Member's Mark 48 oz,14.87,3,lb,2026-11-14
+Almonds,Walmart,Great Value 25 oz,10.48,1.5625,lb,2026-11-14
+Kiwi,Sam's Club,Green kiwi 3 lb,8.57,3,lb,2026-11-14
+Kiwi,Walmart,Fresh kiwi 1 lb,2.62,1,lb,2026-11-14

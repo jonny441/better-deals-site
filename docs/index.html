@@ -8,32 +8,38 @@
   :root { --bg:#f6f5f1; --card:#fff; --ink:#1d1d1b; --mute:#6b6b66; --line:#e3e1da;
           --good:#1f7a4d; --ok:#9a6b00; --bad:#a23b2a; --accent:#2c4a7a; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#141413; --card:#1e1e1c; --ink:#eeede8; --mute:#a3a29b; --line:#33322f; }
+    :root { --bg:#141413; --card:#1e1e1c; --ink:#eeede8; --mute:#a3a29b; --line:#33322f; --accent:#7d9fd6; }
   }
   * { box-sizing:border-box }
   body { margin:0; font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--ink) }
-  header { padding:18px 16px 8px; max-width:1000px; margin:auto }
+  header, .bar, .tabs, main { max-width:1000px; margin:auto; padding-left:16px; padding-right:16px }
+  header { padding-top:18px; padding-bottom:6px }
   h1 { margin:0; font-size:22px } .sub { color:var(--mute); font-size:13px }
-  .bar { display:flex; flex-wrap:wrap; gap:8px; padding:8px 16px; max-width:1000px; margin:auto }
-  input, select { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink) }
-  input { flex:1; min-width:180px }
-  .tabs { display:flex; gap:6px; flex-wrap:wrap; padding:4px 16px; max-width:1000px; margin:auto }
-  .tab { border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 12px; cursor:pointer; font-size:13px }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; padding-top:6px; padding-bottom:6px }
+  .tab { border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:5px 12px; cursor:pointer; font:inherit; font-size:13px }
   .tab.on { background:var(--accent); color:#fff; border-color:var(--accent) }
-  main { max-width:1000px; margin:auto; padding:8px 16px 40px; display:grid; gap:10px }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; padding-top:6px; padding-bottom:6px }
+  input, select, textarea, button.btn { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink) }
+  input { flex:1; min-width:180px }
+  textarea { width:100%; min-height:150px; resize:vertical }
+  button.btn { cursor:pointer } button.primary { background:var(--accent); color:#fff; border-color:var(--accent) }
+  main { padding-top:6px; padding-bottom:40px; display:grid; gap:10px }
   .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px }
   .top { display:flex; justify-content:space-between; gap:10px; align-items:baseline; flex-wrap:wrap }
   .name { font-weight:650; font-size:16px } .cat { color:var(--mute); font-size:12px; text-transform:uppercase; letter-spacing:.04em }
-  .pill { font-size:12px; padding:2px 8px; border-radius:999px; font-weight:600 }
+  .pill { font-size:12px; padding:2px 8px; border-radius:999px; font-weight:600; white-space:nowrap }
   .BUY { background:#1f7a4d22; color:var(--good) } .ok { background:#9a6b0022; color:var(--ok) }
   .skip { background:#a23b2a22; color:var(--bad) } .none { background:#8882; color:var(--mute) }
   .low { background:#2c4a7a22; color:var(--accent) }
   .best { margin:6px 0 2px } .mute { color:var(--mute); font-size:13px }
   table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px }
   th, td { text-align:left; padding:5px 6px; border-top:1px solid var(--line); vertical-align:top }
-  th { color:var(--mute); font-weight:500 } td.num { text-align:right; white-space:nowrap }
+  th { color:var(--mute); font-weight:500 } td.num, th.num { text-align:right; white-space:nowrap }
   details summary { cursor:pointer; color:var(--accent); font-size:13px; margin-top:6px }
-  svg.spark { width:120px; height:28px }
+  svg.spark { width:120px; height:28px; vertical-align:middle }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:8px }
+  .total { font-size:18px; font-weight:700 }
+  a { color:var(--accent) }
 </style>
 </head>
 <body>
@@ -41,99 +47,253 @@
   <h1>Better Deals</h1>
   <div class="sub" id="updated">Loading…</div>
 </header>
-<div class="bar">
+<div class="tabs" id="tabs"></div>
+<div class="bar" id="filters">
   <input id="q" placeholder="Search an item, brand or store…">
   <select id="stype"><option value="">All store types</option></select>
-  <select id="sort">
-    <option value="pct">Biggest savings first</option>
-    <option value="name">A–Z</option>
-  </select>
+  <select id="sort"><option value="pct">Biggest savings first</option><option value="name">A–Z</option></select>
 </div>
-<div class="tabs" id="tabs"></div>
 <main id="list"></main>
 
 <script>
 const $ = s => document.querySelector(s);
-let DATA = null, cat = "all";
+let DATA = null, view = "plan";
 const fmt = n => n == null ? "—" : "$" + Number(n).toFixed(2);
-const pu = (n, u) => n == null ? "—" : "$" + Number(n).toFixed(3) + "/" + u.replace("_", " ");
+const pu = (n, u) => n == null ? "—" : "$" + Number(n).toFixed(3) + "/" + (u || "").replace("_", " ");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store = { get(k){ try { return localStorage.getItem(k) } catch(e) { return null } },
+                set(k,v){ try { localStorage.setItem(k,v) } catch(e) {} } };
 
+/* ---------- shared bits ---------- */
 function spark(hist) {
   if (!hist || hist.length < 2) return "";
   const v = hist.map(p => p.pu), mn = Math.min(...v), mx = Math.max(...v), r = (mx - mn) || 1;
   const pts = v.map((y, i) => `${(i / (v.length - 1)) * 118 + 1},${27 - ((y - mn) / r) * 25}`).join(" ");
   return `<svg class="spark" viewBox="0 0 120 28"><polyline fill="none" stroke="currentColor" stroke-width="1.5" points="${pts}"/></svg>`;
 }
+function pillClass(v) { return v.startsWith("BUY") ? "BUY" : v.startsWith("ok") ? "ok" : v.startsWith("skip") ? "skip" : "none"; }
+const words = s => (s || "").toLowerCase().replace(/[^a-z0-9%&' ]+/g, " ").split(/\s+/).filter(w => w.length > 1);
+const isMine = s => (DATA.my_stores || []).some(m => s.toLowerCase().includes(m.toLowerCase()));
 
-function pillClass(v) {
-  if (v.startsWith("BUY")) return "BUY"; if (v.startsWith("ok")) return "ok";
-  if (v.startsWith("skip")) return "skip"; return "none";
+/* ---------- planner ---------- */
+function parseLine(line) {
+  let qty = 1, t = line.trim();
+  let m = t.match(/^(\d+)\s*x?\s+(.+)$/i) || t.match(/^(.+?)\s*x\s*(\d+)$/i);
+  if (m) { if (/^\d+$/.test(m[1])) { qty = +m[1]; t = m[2]; } else { t = m[1]; qty = +m[2]; } }
+  return { qty, text: t };
+}
+function matchItem(text) {
+  const w = words(text); let best = null, bestScore = 0;
+  for (const it of DATA.items) {
+    const names = [it.name, ...(it.aliases || [])].map(s => s.toLowerCase());
+    let score = 0;
+    for (const n of names) {
+      if (text.toLowerCase().includes(n)) score = Math.max(score, 10 + n.length);
+      const nw = words(n); const hit = nw.filter(x => w.some(y => y.startsWith(x) || x.startsWith(y))).length;
+      if (nw.length && hit === nw.length) score = Math.max(score, 5 + hit);
+    }
+    if (score > bestScore) { bestScore = score; best = it; }
+  }
+  return bestScore >= 6 ? best : null;
+}
+function candidatesFor(text) {
+  const it = matchItem(text), w = words(text), out = [];
+  let note = "";
+  const extra = it ? w.filter(x => !words(it.name).some(n => n.startsWith(x) || x.startsWith(n))) : w;
+  if (it) {
+    let offers = it.offers.filter(o => !extra.length || extra.every(x => o.product.toLowerCase().includes(x)));
+    if (extra.length && !offers.length) { offers = it.offers; note = `No “${extra.join(" ")}” deal this week — best ${it.name.toLowerCase()} instead`; }
+    for (const o of offers) {
+      out.push({ kind:"ad", store:o.store, type:o.store_type, product:o.product, shelf:o.shelf,
+        off:(o.printed_off||0)+(o.reward_back||0)+(o.manual_off||0), net:o.net, size:o.size, pu:o.per_unit,
+        unit:it.unit, note:o.note, v:o.valid_to });
+    }
+    for (const r of it.regular || [])
+      out.push({ kind:"regular", store:r.store, type:"regular price", product:r.product || it.name,
+        shelf:r.price, off:0, net:r.price, size:r.size, pu:r.per_unit, unit:it.unit, note:"Regular price (checked " + r.checked + ")" });
+  }
+  if (!it || !out.some(c => c.kind === "ad")) {
+    const need = w.filter(x => !["the","and","of","for","a"].includes(x));
+    for (const c of DATA.catalog || []) {
+      const n = c.n.toLowerCase();
+      if (need.length && need.every(x => n.includes(x)))
+        out.push({ kind:"ad", store:c.s, type:c.t, product:c.n, shelf:c.p, off:c.o, net:c.net, size:null, pu:null,
+          unit:null, note:[c.note, c.post].filter(Boolean).join("; "), v:c.v });
+    }
+  }
+  return { item: it, cands: out, note };
+}
+function costOf(c, refSize) { return (c.pu != null && refSize) ? c.pu * refSize : c.net; }
+
+function plan(lines, mode) {
+  const rows = lines.map(l => { const p = parseLine(l); return { ...p, ...candidatesFor(p.text) }; });
+  for (const r of rows) {
+    const sizes = r.cands.filter(c => c.size).map(c => c.size).sort((a,b)=>a-b);
+    r.refSize = sizes.length ? sizes[Math.floor(sizes.length/2)] : null;
+    if (mode === "mine") r.cands = r.cands.filter(c => isMine(c.store));
+  }
+  const pick = (r, allowed) => {
+    let best = null;
+    for (const c of r.cands) {
+      if (allowed && !allowed.has(c.store)) continue;
+      if (!best || costOf(c, r.refSize) < costOf(best, r.refSize)) best = c;
+    }
+    return best;
+  };
+  let allowed = null;
+  const k = /^\d$/.test(mode) ? +mode : 0;
+  if (k) {
+    const freq = {};
+    rows.forEach(r => new Set(r.cands.map(c => c.store)).forEach(s => freq[s] = (freq[s]||0) + 1));
+    const top = Object.keys(freq).sort((a,b)=>freq[b]-freq[a]).slice(0, 12);
+    let bestScore = null;
+    const combos = (arr, n, start=0, cur=[]) => {
+      if (cur.length === n || start === arr.length) {
+        if (cur.length) {
+          const set = new Set(cur); let miss = 0, cost = 0;
+          for (const r of rows) { if (!r.cands.length) continue; const p = pick(r, set); if (!p) miss++; else cost += costOf(p, r.refSize) * r.qty; }
+          const sc = miss * 1e6 + cost;
+          if (bestScore === null || sc < bestScore) { bestScore = sc; allowed = set; }
+        }
+        return;
+      }
+      for (let i = start; i < arr.length; i++) combos(arr, n, i + 1, [...cur, arr[i]]);
+    };
+    combos(top, Math.min(k, top.length));
+  }
+  for (const r of rows) {
+    r.pick = pick(r, allowed);
+    r.alts = r.cands.filter(c => c !== r.pick).sort((a,b)=>costOf(a,r.refSize)-costOf(b,r.refSize)).slice(0, 4);
+  }
+  return rows;
 }
 
+function renderPlan() {
+  const saved = store.get("bd_list") || "toothpaste\nshampoo\nlaundry detergent\n2 eggs\nchicken breast\ncoffee";
+  const mode = store.get("bd_mode") || "any";
+  let html = `<div class="card"><div class="name">Plan my list</div>
+    <div class="mute">One item per line. Add a number for more than one (“2 eggs”). Brand words narrow it (“crest toothpaste”).</div>
+    <textarea id="listbox" style="margin-top:8px">${esc(saved)}</textarea>
+    <div class="row">
+      <select id="mode">
+        <option value="any">Cheapest anywhere</option>
+        <option value="mine">Only my usual stores</option>
+        <option value="1">Best with 1 store</option>
+        <option value="2">Best with up to 2 stores</option>
+        <option value="3">Best with up to 3 stores</option>
+      </select>
+      <button class="btn primary" id="go">Find best prices</button>
+      <button class="btn" id="copy">Copy plan</button>
+    </div></div><div id="planout" style="display:grid;gap:10px"></div>`;
+  $("#list").innerHTML = html;
+  $("#mode").value = mode;
+  const run = () => {
+    const lines = $("#listbox").value.split("\n").map(s => s.trim()).filter(Boolean);
+    store.set("bd_list", $("#listbox").value); store.set("bd_mode", $("#mode").value);
+    const rows = plan(lines, $("#mode").value);
+    const byStore = {}; const none = [];
+    for (const r of rows) { if (!r.pick) none.push(r); else (byStore[r.pick.store] ||= []).push(r); }
+    let out = "", grand = 0, text = [];
+    const order = Object.keys(byStore).sort((a,b)=>byStore[b].length-byStore[a].length);
+    for (const s of order) {
+      const list = byStore[s]; const tot = list.reduce((a,r)=>a + r.pick.net * r.qty, 0); grand += tot;
+      const shelfTot = list.reduce((a,r)=>a + r.pick.shelf * r.qty, 0);
+      text.push(`${s} — pay ~${fmt(shelfTot)}, real cost ${fmt(tot)}`);
+      out += `<div class="card"><div class="top"><span class="name">${esc(s)}</span>
+        <span>${list.length} item${list.length>1?"s":""} · real cost <b>${fmt(tot)}</b> <span class="mute">(shelf ${fmt(shelfTot)})</span></span></div>
+        <table><tr><th>You asked</th><th>Buy this</th><th class="num">Shelf</th><th class="num">Back/off</th><th class="num">Net</th><th class="num">Per unit</th></tr>
+        ${list.map(r => { const c = r.pick; text.push(`  - ${r.qty>1?r.qty+" × ":""}${c.product} ${fmt(c.net)}${c.note?" ("+c.note+")":""}`);
+          return `<tr><td>${r.qty>1?r.qty+" × ":""}${esc(r.text)}${r.item?`<div class="mute">${esc(r.item.name)}</div>`:""}${r.note?`<div class="mute"><b>${esc(r.note)}</b></div>`:""}</td>
+          <td>${esc(c.product)}<div class="mute">${c.kind==="regular"?"regular price":esc(c.note||"")}${c.v?" · ends "+c.v:""}</div>
+          ${r.alts.length?`<details><summary>Other options (${r.alts.length})</summary>${r.alts.map(a=>`<div class="mute">${esc(a.store)}: ${esc(a.product)} — ${fmt(a.net)}${a.pu!=null?" · "+pu(a.pu,a.unit):""}</div>`).join("")}</details>`:""}</td>
+          <td class="num">${fmt(c.shelf)}</td><td class="num">${c.off?"−"+fmt(c.off):""}</td><td class="num"><b>${fmt(c.net)}</b></td>
+          <td class="num">${c.pu!=null?pu(c.pu,c.unit):""}</td></tr>`; }).join("")}
+        </table></div>`;
+    }
+    if (none.length) {
+      out += `<div class="card"><div class="name">Not in this week's ads</div><div class="mute">Search these yourself or ask Claude.</div>
+        <table>${none.map(r => `<tr><td>${esc(r.text)}</td><td><a target="_blank" rel="noopener" href="https://flipp.com/en-us/search/${encodeURIComponent(r.text)}?postal_code=${DATA.zip}">Flipp</a> ·
+        <a target="_blank" rel="noopener" href="https://www.walmart.com/search?q=${encodeURIComponent(r.text)}">Walmart</a> ·
+        <a target="_blank" rel="noopener" href="https://www.samsclub.com/s/${encodeURIComponent(r.text)}">Sam's</a></td></tr>`).join("")}</table></div>`;
+      text.push("Not in ads: " + none.map(r => r.text).join(", "));
+    }
+    out = `<div class="card"><div class="top"><span class="total">Real cost ${fmt(grand)}</span>
+      <span class="mute">${order.length} store${order.length!==1?"s":""} · after coupons and rewards in the ads${none.length?` · ${none.length} not found`:""}</span></div>
+      <div class="mute">Clip the coupons listed under each item before you go. Rewards (ExtraBucks, Register Rewards) come back for your next trip.</div></div>` + out;
+    $("#planout").innerHTML = out;
+    $("#planout").dataset.text = `Plan (${DATA.updated})\n` + text.join("\n") + `\nTotal real cost ${fmt(grand)}`;
+  };
+  $("#go").onclick = run;
+  $("#copy").onclick = () => { const t = $("#planout").dataset.text; if (t && navigator.clipboard) navigator.clipboard.writeText(t).catch(()=>{}); };
+  run();
+}
+
+/* ---------- browse views ---------- */
 function offerRows(offers, unit, stype) {
   return offers.filter(o => !stype || o.store_type === stype).map(o => `
-    <tr><td>${o.store}<div class="mute">${o.store_type}</div></td>
-    <td>${o.product}${o.note ? `<div class="mute">${o.note}</div>` : ""}</td>
+    <tr><td>${esc(o.store)}<div class="mute">${esc(o.store_type)}</div></td>
+    <td>${esc(o.product)}${o.note ? `<div class="mute">${esc(o.note)}</div>` : ""}</td>
     <td class="num">${fmt(o.shelf)}</td>
-    <td class="num">${o.printed_off || o.reward_back || o.manual_off ? "−" + fmt((o.printed_off||0) + (o.reward_back||0) + (o.manual_off||0)) : ""}</td>
+    <td class="num">${(o.printed_off||0)+(o.reward_back||0)+(o.manual_off||0) ? "−" + fmt((o.printed_off||0)+(o.reward_back||0)+(o.manual_off||0)) : ""}</td>
     <td class="num"><b>${fmt(o.net)}</b></td>
     <td class="num">${pu(o.per_unit, unit)}</td></tr>`).join("");
+}
+function renderFree(q, stype, all) {
+  const free = DATA.free.filter(f => (!stype || f.store_type === stype) && (!q || JSON.stringify(f).toLowerCase().includes(q)));
+  if (!free.length) return "";
+  return `<div class="card"><div class="top"><span class="name">Free / almost free</span><span class="mute">${free.length} found · net $1 or less after rewards</span></div><table>
+    <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Back/off</th><th class="num">Net</th></tr>
+    ${free.slice(0, all ? 300 : 8).map(f => `<tr><td>${esc(f.store)}<div class="mute">${esc(f.store_type)}</div></td>
+    <td>${esc(f.product)}<div class="mute">${esc(f.note || "")} ${f.valid_to ? "· ends " + f.valid_to : ""}</div></td>
+    <td class="num">${fmt(f.shelf)}</td><td class="num">−${fmt((f.printed_off||0)+(f.reward_back||0))}</td><td class="num"><b>${fmt(f.net)}</b></td></tr>`).join("")}
+    </table>${!all && free.length > 8 ? `<div class="mute" style="margin-top:6px">See the “Free / near free” tab for all ${free.length}.</div>` : ""}</div>`;
+}
+function renderItems(q, stype, cat) {
+  let items = DATA.items.filter(i => (cat === "all" || i.category === cat) && (!q || JSON.stringify(i).toLowerCase().includes(q)));
+  if ($("#sort").value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
+  else items.sort((a, b) => (b.pct_vs_baseline ?? -999) - (a.pct_vs_baseline ?? -999));
+  return items.map(i => {
+    const b = i.best, rows = offerRows(i.offers, i.unit, stype);
+    return `<div class="card">
+      <div class="top"><div><span class="name">${esc(i.name)}</span> <span class="cat">${esc(i.category)}</span></div>
+        <div><span class="pill ${pillClass(i.verdict)}">${esc(i.verdict)}</span>
+        ${i.beats_target ? '<span class="pill BUY">under your target</span>' : ""}
+        ${i.at_90d_low ? '<span class="pill low">90-day low</span>' : ""}</div></div>
+      ${b ? `<div class="best"><b>${esc(b.store)}</b> — ${fmt(b.net)} net · ${pu(b.per_unit, i.unit)}
+        ${i.pct_vs_baseline != null ? ` · <b>${i.pct_vs_baseline}%</b> under` : ""}</div>
+        <div class="mute">${esc(b.product)}${b.note ? " · " + esc(b.note) : ""}${b.valid_to ? " · ends " + b.valid_to : ""}</div>`
+        : `<div class="mute best">No weekly-ad deal found.</div>`}
+      <div class="mute">Regular best: ${i.baseline ? `${esc(i.baseline.store)} ${pu(i.baseline.per_unit, i.unit)}` : "not set"}
+        ${i.target ? ` · your target ${pu(i.target, i.unit)}` : ""}
+        ${i.low_90d ? ` · 90-day low ${pu(i.low_90d, i.unit)}` : ""} ${spark(i.history)}</div>
+      ${rows ? `<details><summary>All stores (${i.offers.length})</summary><table>
+        <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Off</th><th class="num">Net</th><th class="num">Per unit</th></tr>
+        ${rows}</table></details>` : ""}
+    </div>`;
+  }).join("");
 }
 
 function render() {
   if (!DATA) return;
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.c === view));
+  $("#filters").style.display = view === "plan" ? "none" : "flex";
+  if (view === "plan") return renderPlan();
   const q = $("#q").value.trim().toLowerCase(), stype = $("#stype").value;
   let html = "";
-
-  if (cat === "free" || cat === "all") {
-    const free = DATA.free.filter(f => (!stype || f.store_type === stype) &&
-      (!q || JSON.stringify(f).toLowerCase().includes(q)));
-    if (free.length) html += `<div class="card"><div class="top"><span class="name">Free / almost free</span>
-      <span class="mute">${free.length} found</span></div><table>
-      <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Back</th><th class="num">Net</th></tr>
-      ${free.slice(0, cat === "free" ? 200 : 8).map(f => `<tr><td>${f.store}<div class="mute">${f.store_type}</div></td>
-      <td>${f.product}<div class="mute">${f.note || ""} ${f.valid_to ? "· ends " + f.valid_to : ""}</div></td>
-      <td class="num">${fmt(f.shelf)}</td><td class="num">−${fmt((f.printed_off||0) + (f.reward_back||0))}</td><td class="num"><b>${fmt(f.net)}</b></td></tr>`).join("")}
-      </table>${cat !== "free" && free.length > 8 ? `<div class="mute" style="margin-top:6px">Tap the “Free” tab for all ${free.length}.</div>` : ""}</div>`;
-  }
-
-  if (cat !== "free") {
-    let items = DATA.items.filter(i => (cat === "all" || i.category === cat) &&
-      (!q || JSON.stringify(i).toLowerCase().includes(q)));
-    if ($("#sort").value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
-    else items.sort((a, b) => (b.pct_vs_baseline ?? -999) - (a.pct_vs_baseline ?? -999));
-
-    html += items.map(i => {
-      const b = i.best;
-      const rows = offerRows(i.offers, i.unit, stype);
-      return `<div class="card">
-        <div class="top"><div><span class="name">${i.name}</span> <span class="cat">${i.category}</span></div>
-          <div><span class="pill ${pillClass(i.verdict)}">${i.verdict}</span>
-          ${i.at_90d_low ? '<span class="pill low">90-day low</span>' : ""}</div></div>
-        ${b ? `<div class="best"><b>${b.store}</b> — ${fmt(b.net)} net · ${pu(b.per_unit, i.unit)}
-          ${i.pct_vs_baseline != null ? ` · <b>${i.pct_vs_baseline}%</b> vs regular` : ""}</div>
-          <div class="mute">${b.product}${b.note ? " · " + b.note : ""}${b.valid_to ? " · ends " + b.valid_to : ""}</div>`
-          : `<div class="mute best">No weekly-ad deal found.</div>`}
-        <div class="mute">Regular best: ${i.baseline ? `${i.baseline.store} ${pu(i.baseline.per_unit, i.unit)}` : "not set (add to baseline.csv)"}
-          ${i.low_90d ? ` · 90-day low ${pu(i.low_90d, i.unit)}` : ""} ${spark(i.history)}</div>
-        ${rows ? `<details><summary>All stores (${i.offers.length})</summary><table>
-          <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Off</th><th class="num">Net</th><th class="num">Per unit</th></tr>
-          ${rows}</table></details>` : ""}
-      </div>`;
-    }).join("");
-  }
+  if (view === "free") html = renderFree(q, stype, true);
+  else { if (view === "all") html += renderFree(q, stype, false); html += renderItems(q, stype, view); }
   $("#list").innerHTML = html || `<div class="card mute">Nothing matches.</div>`;
 }
 
 fetch("data.json?" + Date.now()).then(r => r.json()).then(d => {
   DATA = d;
-  $("#updated").textContent = `Updated ${d.updated} · ZIP ${d.zip}` + (d.errors?.length ? ` · ${d.errors.length} search errors` : "");
-  const cats = ["all", ...new Set(d.items.map(i => i.category)), "free"];
-  $("#tabs").innerHTML = cats.map(c => `<button class="tab ${c === cat ? "on" : ""}" data-c="${c}">${c === "free" ? "Free / near free" : c}</button>`).join("");
-  $("#tabs").onclick = e => { if (!e.target.dataset.c) return; cat = e.target.dataset.c;
-    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.c === cat)); render(); };
+  $("#updated").textContent = `Updated ${d.updated} · ZIP ${d.zip} · ${d.items.length} items tracked · ${(d.catalog||[]).length} ad items this week` + (d.errors?.length ? ` · ${d.errors.length} search errors` : "");
+  const cats = [...new Set(d.items.map(i => i.category))];
+  const tabs = [["plan","Plan my list"],["all","All"],...cats.map(c=>[c,c]),["free","Free / near free"]];
+  $("#tabs").innerHTML = tabs.map(([c,l]) => `<button class="tab" data-c="${esc(c)}">${esc(l)}</button>`).join("");
+  $("#tabs").onclick = e => { if (!e.target.dataset.c) return; view = e.target.dataset.c; render(); };
   const types = new Set(); d.items.forEach(i => i.offers.forEach(o => types.add(o.store_type))); d.free.forEach(f => types.add(f.store_type));
-  $("#stype").innerHTML += [...types].sort().map(t => `<option>${t}</option>`).join("");
+  $("#stype").innerHTML += [...types].sort().map(t => `<option>${esc(t)}</option>`).join("");
   render();
 }).catch(() => $("#updated").textContent = "No data yet — run the 'Update deals' workflow once on GitHub.");
 ["#q", "#stype", "#sort"].forEach(s => $(s).addEventListener("input", render));

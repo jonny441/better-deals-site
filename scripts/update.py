@@ -39,7 +39,12 @@ UNIT_PATTERNS = {
     "roll": r"(\d+)(?:\s*-\s*\d+)?[-\s]*(?:(?:single|double|triple|mega|family|giant|huge|regular|big|plus)[-\s]*)*(?:rolls?|rl)\b",
     "ct": r"(\d+)(?:\s*-\s*\d+)?[-\s]*(?:ct|count|pk|pack|pc|pcs)\b",
     "sheet": r"(\d+)(?:\s*-\s*\d+)?[-\s]*sheets?\b",
+    "lb": r"(\d+(?:\.\d+)?)(?:\s*-\s*\d+(?:\.\d+)?)?\s*(?:lbs?|pounds?)\b",
+    "g": r"(\d+(?:\.\d+)?)(?:\s*-\s*\d+(?:\.\d+)?)?\s*(?:g|grams?)\b",
+    "dozen": r"(\d+(?:\.\d+)?)\s*(?:dozen|doz|dz)\b",
 }
+G_PER_OZ = 28.3495
+G_PER_LB = 453.592
 ML_PER_FLOZ = 29.5735
 
 
@@ -65,6 +70,17 @@ def parse_size(text, unit, keywords=()):
         candidates += _matches(r"(\d+(?:\.\d+)?)(?:\s*-\s*\d+(?:\.\d+)?)?\s*(?:l|liters?)\b", t, 1000 / ML_PER_FLOZ)
     elif unit == "oz":
         candidates += _matches(UNIT_PATTERNS["oz"], t)
+    elif unit == "lb":
+        candidates += _matches(UNIT_PATTERNS["lb"], t)
+        candidates += _matches(UNIT_PATTERNS["oz"], t, 1 / 16)
+    elif unit == "g":
+        candidates += _matches(UNIT_PATTERNS["g"], t)
+        candidates += _matches(r"(\d+(?:\.\d+)?)\s*kg\b", t, 1000)
+        candidates += _matches(UNIT_PATTERNS["oz"], t, G_PER_OZ)
+        candidates += _matches(UNIT_PATTERNS["lb"], t, G_PER_LB)
+    elif unit == "dozen":
+        candidates += _matches(UNIT_PATTERNS["dozen"], t)
+        candidates += _matches(UNIT_PATTERNS["ct"], t, 1 / 12)
     else:
         pat = UNIT_PATTERNS.get(unit)
         candidates += _matches(pat, t) if pat else []
@@ -196,10 +212,32 @@ def still_valid(item):
 
 
 # ---------- main ----------
-def build(search_fn=flipp_search):
+PER_LB_TEXT = re.compile(r"^\s*(?:/|per\s*)?\s*lbs?\.?\s*$")
+
+
+def has_word(text, words):
+    t = (text or "").lower()
+    return any(re.search(rf"\b{re.escape(w.lower())}\b", t) for w in words if w)
+
+
+def compact(a, shelf, off, net, note, types):
+    merchant = (a.get("merchant_name") or "?").strip()
+    return {"s": merchant, "t": store_type(merchant, types), "n": a.get("name") or "",
+            "p": round(shelf, 2), "o": round(off, 2), "net": round(net, 2),
+            "note": note, "post": (a.get("post_price_text") or "").strip(),
+            "v": (a.get("valid_to") or "")[:10]}
+
+
+def build(search_fn=flipp_search, pause=1.0):
     wl = load_json(DATA / "watchlist.json", {"items": []})
-    types = load_json(DATA / "stores.json", {"types": {}}).get("types", {})
+    stores_cfg = load_json(DATA / "stores.json", {"types": {}})
+    types = stores_cfg.get("types", {})
+    skip_stores = [x.lower() for x in stores_cfg.get("skip", [])]
+    my_stores = stores_cfg.get("my_stores", [])
     zip_code = wl.get("zip", "43213")
+    rules = wl.get("rules", {})
+    global_ex = rules.get("exclude_everywhere", [])
+    cat_ex = rules.get("exclude_by_category", {})
     baseline = load_csv(DATA / "baseline.csv")
     manual = [r for r in load_csv(DATA / "manual_offers.csv")
               if not r.get("expires") or r["expires"] >= date.today().isoformat()]
@@ -207,39 +245,66 @@ def build(search_fn=flipp_search):
     today = date.today().isoformat()
 
     out_items, free_finds, errors = [], [], []
+    catalog = {}
+    cache = {}
+
+    def search(term):
+        if term in cache:
+            return cache[term]
+        try:
+            ads = search_fn(term, zip_code)
+        except Exception as e:  # keep going if one search fails
+            errors.append(f"{term}: {e}")
+            ads = []
+        time.sleep(pause)
+        keep = []
+        for a in ads:
+            m = (a.get("merchant_name") or "").lower()
+            if not still_valid(a) or any(x in m for x in skip_stores):
+                continue
+            if has_word(a.get("name"), global_ex):
+                continue
+            keep.append(a)
+        cache[term] = keep
+        return keep
+
+    def add_catalog(a):
+        key = ((a.get("merchant_name") or "").strip(), a.get("name"))
+        if key in catalog:
+            return
+        shelf, printed_off, reward, note = parse_deal(a)
+        if shelf is None:
+            return
+        catalog[key] = compact(a, shelf, printed_off + reward,
+                               max(shelf - printed_off - reward, 0), note, types)
 
     for w in wl.get("items", []):
         unit = w["unit"]
-        try:
-            ads = search_fn(w["search"], zip_code)
-        except Exception as e:  # keep going if one search fails
-            errors.append(f"{w['name']}: {e}")
-            ads = []
-        time.sleep(1.5)  # be polite
+        ex_words = list(w.get("must_not_include", [])) + list(cat_ex.get(w["category"], []))
+        ads = search(w["search"])
 
         offers = []
         for a in ads:
+            add_catalog(a)
             name = a.get("name") or ""
-            if not still_valid(a):
-                continue
             if any(k.lower() not in name.lower() for k in w.get("must_include", [])):
                 continue
-            if any(re.search(rf"\b{re.escape(k.lower())}\b", name.lower())
-                   for k in w.get("must_not_include", [])):
+            if has_word(name, ex_words):
                 continue
             shelf, printed_off, reward, note = parse_deal(a)
             if shelf is None:
                 continue
-            merchant = a.get("merchant_name") or "?"
-            manual_off = sum(float(r.get("amount_off") or 0) for r in manual
-                             if r["item"].lower() == w["name"].lower()
-                             and r["store"].lower() in merchant.lower())
-            manual_notes = [r["offer"] for r in manual
-                            if r["item"].lower() == w["name"].lower()
-                            and r["store"].lower() in merchant.lower()]
+            merchant = (a.get("merchant_name") or "?").strip()
+            mine = [r for r in manual if r["item"].lower() == w["name"].lower()
+                    and r["store"].lower() in merchant.lower()]
+            manual_off = sum(float(r.get("amount_off") or 0) for r in mine)
             net = max(shelf - printed_off - reward - manual_off, 0)
-            size = parse_size(name + " " + (a.get("post_price_text") or ""), unit,
-                              w.get("size_keywords") or w.get("must_include") or [w["name"]])
+            post = a.get("post_price_text") or ""
+            if unit == "lb" and PER_LB_TEXT.match(post):
+                size = 1.0
+            else:
+                size = parse_size(name + " " + post, unit,
+                                  w.get("size_keywords") or w.get("must_include") or [w["name"]])
             if size is not None and size < float(w.get("min_size", 0)):
                 continue
             offers.append({
@@ -253,62 +318,68 @@ def build(search_fn=flipp_search):
                 "net": round(net, 2),
                 "size": size,
                 "per_unit": round(net / size, 4) if size else None,
-                "note": "; ".join(filter(None, [note] + manual_notes)),
+                "note": "; ".join(filter(None, [note] + [r["offer"] for r in mine])),
                 "valid_to": (a.get("valid_to") or "")[:10],
                 "image": a.get("clean_image_url") or a.get("image_url"),
             })
             if shelf > 0 and net <= 0.5:
                 free_finds.append({"item": w["name"], **offers[-1]})
 
-        # rank: per-unit first (when known), then net price
         offers.sort(key=lambda o: (o["per_unit"] is None, o["per_unit"] or 0, o["net"]))
 
-        # baseline: cheapest regular price per unit
-        base_rows = [b for b in baseline
-                     if b["item"].lower() == w["name"].lower()
-                     and b.get("unit", "").lower() == unit.lower()]
-        base_best = None
-        for b in base_rows:
+        # regular prices: every store row, plus the cheapest per unit
+        regular = []
+        for b in baseline:
+            if b["item"].lower() != w["name"].lower() or b.get("unit", "").lower() != unit.lower():
+                continue
             try:
-                pu = float(b["regular_price"]) / float(b["size"])
+                price, size = float(b["regular_price"]), float(b["size"])
+                regular.append({"store": b["store"], "product": b.get("product", ""),
+                                "price": price, "size": size,
+                                "per_unit": round(price / size, 4), "checked": b.get("checked", "")})
             except (ValueError, ZeroDivisionError, KeyError):
                 continue
-            if base_best is None or pu < base_best["per_unit"]:
-                base_best = {"store": b["store"], "per_unit": round(pu, 4),
-                             "price": float(b["regular_price"]), "size": float(b["size"])}
+        regular.sort(key=lambda r: r["per_unit"])
+        base_best = regular[0] if regular else None
+        target = w.get("target")
 
         best = next((o for o in offers if o["per_unit"] is not None), offers[0] if offers else None)
+        ref = base_best["per_unit"] if base_best else target
+        ref_label = "regular price" if base_best else "your target"
         verdict, pct = "no ad deal this week", None
-        if best and base_best and best["per_unit"]:
-            pct = round((1 - best["per_unit"] / base_best["per_unit"]) * 100)
-            verdict = "BUY - beats regular price" if pct >= 15 else (
-                "ok - small savings" if pct > 0 else "skip - regular price is cheaper")
+        if best and ref and best["per_unit"]:
+            pct = round((1 - best["per_unit"] / ref) * 100)
+            verdict = (f"BUY - beats {ref_label}" if pct >= 15 else
+                       "ok - small savings" if pct > 0 else f"skip - {ref_label} is cheaper")
         elif best:
-            verdict = "ad deal (no baseline yet to compare)"
+            verdict = "ad deal (no price to compare yet)"
 
-        # history (keep 180 days of best per-unit)
-        h = history.setdefault(w["name"], [])
+        h = [p for p in history.get(w["name"], []) if p["d"] != today]
         if best and best["per_unit"]:
-            h = [p for p in h if p["d"] != today]
             h.append({"d": today, "pu": best["per_unit"], "store": best["store"]})
-            cutoff = (date.today() - timedelta(days=180)).isoformat()
-            history[w["name"]] = [p for p in h if p["d"] >= cutoff]
-        low90 = None
+        cutoff = (date.today() - timedelta(days=180)).isoformat()
+        history[w["name"]] = [p for p in h if p["d"] >= cutoff]
         cutoff90 = (date.today() - timedelta(days=90)).isoformat()
-        recent = [p["pu"] for p in history.get(w["name"], []) if p["d"] >= cutoff90]
-        if recent:
-            low90 = min(recent)
+        recent = [p["pu"] for p in history[w["name"]] if p["d"] >= cutoff90]
+        low90 = min(recent) if recent else None
 
         out_items.append({
             "name": w["name"], "category": w["category"], "unit": unit,
-            "best": best, "baseline": base_best, "pct_vs_baseline": pct,
-            "verdict": verdict, "low_90d": low90,
+            "aliases": w.get("aliases", []), "target": target,
+            "best": best, "baseline": base_best, "regular": regular,
+            "pct_vs_baseline": pct, "verdict": verdict, "low_90d": low90,
+            "beats_target": bool(best and best.get("per_unit") and target and best["per_unit"] <= target),
             "at_90d_low": bool(best and best.get("per_unit") and low90 and best["per_unit"] <= low90 * 1.02),
-            "offers": offers[:15],
-            "history": history.get(w["name"], []),
+            "offers": offers[:25],
+            "history": history[w["name"]],
         })
 
-    # extra scan: freebies across ALL ads, not just watchlist
+    # wider catalog for the shopping-list planner
+    for term in wl.get("catalog_terms", []):
+        for a in search(term):
+            add_catalog(a)
+
+    # freebies across all ads
     deduped = {}
     for find in free_finds:
         key = (find["store"], find["product"])
@@ -317,37 +388,29 @@ def build(search_fn=flipp_search):
     free_finds = list(deduped.values())
     seen = set(deduped)
     for term in wl.get("free_scan_terms", []):
-        try:
-            ads = search_fn(term, zip_code)
-        except Exception as e:
-            errors.append(f"scan {term}: {e}")
-            continue
-        time.sleep(1.5)
-        for a in ads:
-            if not still_valid(a):
-                continue
-            shelf, printed_off, reward, note = parse_deal(a)
-            if not shelf or printed_off + reward <= 0:
-                continue
-            net = max(shelf - printed_off - reward, 0)
-            key = (a.get("merchant_name"), a.get("name"))
-            if net <= 1.0 and key not in seen:
-                seen.add(key)
-                free_finds.append({"item": "(scan) " + term, "store": a.get("merchant_name"),
-                                   "store_type": store_type(a.get("merchant_name"), types),
-                                   "product": a.get("name"), "shelf": round(shelf, 2),
-                                   "printed_off": round(printed_off, 2),
-                                   "reward_back": round(reward, 2), "net": round(net, 2),
-                                   "note": note, "valid_to": (a.get("valid_to") or "")[:10]})
+        for a in search(term):
+            add_catalog(a)
+    for c in catalog.values():
+        key = (c["s"], c["n"])
+        if c["o"] > 0 and c["net"] <= 1.0 and key not in seen:
+            seen.add(key)
+            free_finds.append({"item": "(scan)", "store": c["s"], "store_type": c["t"],
+                               "product": c["n"], "shelf": c["p"], "printed_off": 0,
+                               "reward_back": c["o"], "net": c["net"], "note": c["note"],
+                               "valid_to": c["v"]})
     free_finds.sort(key=lambda f: f["net"])
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({
         "updated": datetime.now().isoformat(timespec="minutes"),
-        "zip": zip_code, "items": out_items, "free": free_finds, "errors": errors,
-    }, indent=1))
+        "zip": zip_code, "my_stores": my_stores,
+        "items": out_items, "free": free_finds,
+        "catalog": sorted(catalog.values(), key=lambda c: c["n"].lower()),
+        "errors": errors,
+    }, separators=(",", ":")))
     HISTORY.write_text(json.dumps(history, indent=1))
-    print(f"wrote {len(out_items)} items, {len(free_finds)} free/near-free, {len(errors)} errors")
+    print(f"wrote {len(out_items)} items, {len(catalog)} catalog ads, "
+          f"{len(free_finds)} free/near-free, {len(errors)} errors")
     return 0
 
 

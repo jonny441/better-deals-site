@@ -1,29 +1,62 @@
 {
-  "_how_to_edit": "One entry per staple. 'search' is what gets typed into Flipp. 'unit' is how prices are compared (oz, fl_oz, ct, load, roll, sheet). Every 'must_include' word must appear in the ad name. Any whole word in 'must_not_include' rejects it. 'min_size' can reject travel sizes. Add or delete freely.",
+  "_how_to_edit": "One entry per item you buy again and again. 'search' = what is typed into Flipp. 'unit' = how prices are compared (oz, fl_oz, ct, load, roll, lb, g, dozen). Every 'must_include' word must be in the ad name; any 'must_not_include' word rejects it. 'min_size' drops travel sizes. 'target' = the most you want to pay per unit (from the Targets tab). 'aliases' = other words you might type in the shopping-list planner.",
   "zip": "43213",
+  "rules": {
+    "_note": "From the Better Deals workbook ground rules.",
+    "exclude_everywhere": ["dog", "dogs", "cat food", "cat litter", "puppy", "kitten", "pet", "diaper", "diapers", "infant formula", "baby formula", "baby food", "pacifier", "pacifiers"],
+    "exclude_by_category": {
+      "Face & skincare": ["benzoyl", "retinol", "retinoid", "retinal", "adapalene", "differin", "tinted"]
+    }
+  },
   "items": [
-    {"name": "Toothpaste", "category": "oral", "search": "toothpaste", "unit": "oz", "must_include": ["toothpaste"], "must_not_include": ["kids", "travel", "trial"], "min_size": 2.5},
-    {"name": "Mouthwash", "category": "oral", "search": "mouthwash", "unit": "fl_oz", "must_include": ["mouthwash"], "must_not_include": ["kids", "travel", "trial"], "min_size": 8},
-    {"name": "Toothbrush", "category": "oral", "search": "toothbrush", "unit": "ct", "must_include": ["toothbrush"], "must_not_include": ["kids", "travel"]},
-    {"name": "Floss", "category": "oral", "search": "dental floss", "unit": "ct", "must_include": ["floss"], "must_not_include": ["kids", "travel", "meat", "chicken", "pork", "beef", "cake"]},
+    {"name": "Toothpaste", "category": "Oral care", "search": "toothpaste", "unit": "oz", "target": 0.27, "aliases": ["crest", "colgate", "sensodyne", "tooth paste"], "must_include": ["toothpaste"], "must_not_include": ["kids", "travel", "trial"], "min_size": 2.5},
+    {"name": "Mouthwash", "category": "Oral care", "search": "mouthwash", "unit": "fl_oz", "aliases": ["listerine", "mouth wash", "rinse"], "must_include": ["mouthwash"], "must_not_include": ["kids", "travel", "trial"], "min_size": 8},
+    {"name": "Toothbrush", "category": "Oral care", "search": "toothbrush", "unit": "ct", "aliases": ["tooth brush", "oral-b"], "must_include": ["toothbrush"], "must_not_include": ["kids", "travel"]},
+    {"name": "Floss", "category": "Oral care", "search": "dental floss", "unit": "ct", "aliases": ["floss picks", "flossers"], "must_include": ["floss"], "must_not_include": ["kids", "travel", "meat", "chicken", "pork", "beef", "cake"]},
 
-    {"name": "Face wash", "category": "face", "search": "facial cleanser", "unit": "fl_oz", "must_include": ["facial"], "must_not_include": ["travel", "trial", "gift"], "min_size": 2},
-    {"name": "Face moisturizer", "category": "face", "search": "facial moisturizer", "unit": "fl_oz", "must_include": ["facial", "moisturizer"], "must_not_include": ["travel", "trial", "gift"], "min_size": 1},
-    {"name": "Sunscreen", "category": "face", "search": "sunscreen", "unit": "fl_oz", "must_include": ["sunscreen"], "must_not_include": ["travel", "trial"], "min_size": 2},
+    {"name": "Face moisturizer", "category": "Face & skincare", "search": "face moisturizer", "unit": "oz", "target": 0.60, "aliases": ["moisturizer", "cetaphil", "cerave", "vanicream", "face cream", "face lotion"], "must_include": ["moistur"], "must_not_include": ["travel", "trial", "gift", "body"], "min_size": 1.5},
+    {"name": "Face sunscreen", "category": "Face & skincare", "search": "face sunscreen", "unit": "oz", "target": 8.28, "aliases": ["sunscreen", "spf", "neutrogena clear face"], "must_include": ["sun"], "must_not_include": ["travel", "trial", "spray", "kids"], "min_size": 1},
+    {"name": "Face wash", "category": "Face & skincare", "search": "facial cleanser", "unit": "fl_oz", "aliases": ["cleanser", "face wash"], "must_include": ["cleans"], "must_not_include": ["travel", "trial", "gift"], "min_size": 2},
+    {"name": "Azelaic acid", "category": "Face & skincare", "search": "azelaic acid", "unit": "oz", "target": 9.00, "aliases": ["azelaic"], "must_include": ["azelaic"]},
+    {"name": "Niacinamide serum", "category": "Face & skincare", "search": "niacinamide serum", "unit": "fl_oz", "target": 5.90, "aliases": ["niacinamide", "the ordinary"], "must_include": ["niacinamide"]},
+    {"name": "BHA 2% leave-on", "category": "Face & skincare", "search": "salicylic acid exfoliant", "unit": "fl_oz", "aliases": ["bha", "salicylic", "exfoliant"], "must_include": ["salicylic"], "must_not_include": ["body", "shampoo", "wash"]},
+    {"name": "Vitamin C serum", "category": "Face & skincare", "search": "vitamin c serum", "unit": "fl_oz", "target": 11.00, "aliases": ["vitamin c", "vit c serum"], "must_include": ["serum"]},
+    {"name": "Healing ointment", "category": "Face & skincare", "search": "healing ointment", "unit": "oz", "target": 0.57, "aliases": ["aquaphor", "vaseline", "petroleum jelly", "ointment"], "must_include": ["ointment"]},
 
-    {"name": "Shampoo", "category": "hair", "search": "shampoo", "unit": "fl_oz", "must_include": ["shampoo"]},
-    {"name": "Conditioner", "category": "hair", "search": "conditioner", "unit": "fl_oz", "must_include": ["conditioner"]},
+    {"name": "Shampoo", "category": "Hair", "search": "shampoo", "unit": "fl_oz", "aliases": ["head & shoulders", "head and shoulders", "dandruff shampoo"], "must_include": ["shampoo"], "must_not_include": ["kids", "baby", "travel", "carpet", "dry shampoo"], "min_size": 8},
+    {"name": "Conditioner", "category": "Hair", "search": "conditioner", "unit": "fl_oz", "aliases": ["hair conditioner"], "must_include": ["conditioner"], "must_not_include": ["kids", "baby", "travel", "air", "fabric"], "min_size": 8},
 
-    {"name": "Body wash", "category": "skin", "search": "body wash", "unit": "fl_oz", "must_include": ["body", "wash"], "must_not_include": ["travel", "trial", "gift"], "min_size": 8},
-    {"name": "Body lotion", "category": "skin", "search": "body lotion", "unit": "fl_oz", "must_include": ["body", "lotion"], "must_not_include": ["travel", "trial", "gift"], "min_size": 4},
-    {"name": "Deodorant", "category": "skin", "search": "deodorant", "unit": "oz", "must_include": ["deodorant"], "must_not_include": ["travel", "trial"], "min_size": 1.5},
-    {"name": "Bar soap", "category": "skin", "search": "bar soap", "unit": "ct", "must_include": ["bar", "soap"], "must_not_include": ["travel", "trial", "gift"], "size_keywords": ["bar soap"]},
+    {"name": "Body wash", "category": "Body & skin", "search": "body wash", "unit": "fl_oz", "aliases": ["dove body wash", "shower gel"], "must_include": ["body", "wash"], "must_not_include": ["travel", "trial", "gift", "kids", "baby"], "min_size": 8},
+    {"name": "Bar soap", "category": "Body & skin", "search": "bar soap", "unit": "ct", "target": 1.70, "aliases": ["soap bars", "irish spring", "dove bar"], "must_include": ["bar"], "must_not_include": ["travel", "trial", "gift", "candy", "granola", "protein"], "size_keywords": ["bar"]},
+    {"name": "Body lotion", "category": "Body & skin", "search": "body lotion", "unit": "fl_oz", "aliases": ["lotion", "lactic acid lotion", "amlactin"], "must_include": ["lotion"], "must_not_include": ["travel", "trial", "gift", "kids", "baby", "sunscreen"], "min_size": 4},
+    {"name": "Deodorant", "category": "Body & skin", "search": "deodorant", "unit": "oz", "target": 0.77, "aliases": ["antiperspirant", "degree", "old spice", "dove men"], "must_include": [], "must_not_include": ["travel", "trial", "body spray"], "min_size": 1.5},
+    {"name": "Hand soap", "category": "Body & skin", "search": "hand soap", "unit": "fl_oz", "aliases": ["softsoap", "liquid hand soap"], "must_include": ["hand"], "must_not_include": ["dish"]},
 
-    {"name": "Laundry detergent", "category": "household", "search": "laundry detergent", "unit": "load", "must_include": ["laundry"], "must_not_include": ["travel"]},
-    {"name": "Paper towels", "category": "household", "search": "paper towels", "unit": "roll", "must_include": ["paper", "towels"]},
-    {"name": "Toilet paper", "category": "household", "search": "toilet paper", "unit": "roll", "must_include": ["toilet", "paper"]},
-    {"name": "Dish soap", "category": "household", "search": "dish soap", "unit": "fl_oz", "must_include": ["dish", "soap"], "min_size": 8},
-    {"name": "Trash bags", "category": "household", "search": "trash bags", "unit": "ct", "must_include": ["trash", "bags"]}
+    {"name": "Laundry detergent", "category": "Household", "search": "laundry detergent", "unit": "load", "target": 0.08, "aliases": ["detergent", "tide", "gain", "laundry pods", "arm & hammer"], "must_include": [], "must_not_include": ["travel", "stain remover"]},
+    {"name": "Dish soap", "category": "Household", "search": "dish soap", "unit": "fl_oz", "target": 0.088, "aliases": ["dawn", "dish liquid", "dishwashing"], "must_include": ["dish"], "must_not_include": ["dishwasher", "pods", "rack"], "min_size": 8},
+    {"name": "Toilet paper", "category": "Household", "search": "toilet paper", "unit": "roll", "aliases": ["tp", "bath tissue", "charmin", "scott", "angel soft"], "must_include": [], "must_not_include": ["holder", "kids"]},
+    {"name": "Paper towels", "category": "Household", "search": "paper towels", "unit": "roll", "aliases": ["bounty", "towels"], "must_include": ["towel"], "must_not_include": ["holder", "bath", "beach"]},
+    {"name": "Trash bags", "category": "Household", "search": "trash bags", "unit": "ct", "aliases": ["garbage bags", "glad", "hefty"], "must_include": ["bags"]},
+    {"name": "All-purpose cleaner", "category": "Household", "search": "all purpose cleaner", "unit": "fl_oz", "aliases": ["cleaner", "lysol", "pine-sol", "spray cleaner"], "must_include": ["clean"], "must_not_include": ["vacuum", "carpet machine"]},
+    {"name": "Disinfecting wipes", "category": "Household", "search": "disinfecting wipes", "unit": "ct", "aliases": ["clorox wipes", "lysol wipes"], "must_include": ["wipes"], "must_not_include": ["baby"]},
+
+    {"name": "Creatine", "category": "Supplements & protein", "search": "creatine", "unit": "g", "target": 0.04, "aliases": ["creatine monohydrate"], "must_include": ["creatine"]},
+    {"name": "Whey protein", "category": "Supplements & protein", "search": "whey protein", "unit": "lb", "target": 17.50, "aliases": ["protein powder", "whey", "gold standard"], "must_include": ["protein"], "must_not_include": ["bar", "bars", "shake", "drink", "cereal", "pasta", "chips"]},
+    {"name": "Vitamin D3", "category": "Supplements & protein", "search": "vitamin d3", "unit": "ct", "aliases": ["vitamin d", "d3"], "must_include": ["d3"], "must_not_include": ["kids", "gummies"]},
+    {"name": "Magnesium glycinate", "category": "Supplements & protein", "search": "magnesium glycinate", "unit": "ct", "aliases": ["magnesium"], "must_include": ["magnesium"]},
+    {"name": "Fish oil", "category": "Supplements & protein", "search": "fish oil", "unit": "ct", "aliases": ["omega 3", "omega-3"], "must_include": ["fish oil"], "must_not_include": ["kids", "gummies", "dog"]},
+    {"name": "Zinc", "category": "Supplements & protein", "search": "zinc supplement", "unit": "ct", "aliases": ["zinc copper"], "must_include": ["zinc"], "must_not_include": ["lozenge", "cough"]},
+
+    {"name": "Pain reliever", "category": "Medicine", "search": "ibuprofen", "unit": "ct", "aliases": ["ibuprofen", "advil", "motrin", "tylenol", "acetaminophen", "aleve"], "must_include": [], "must_not_include": ["kids", "children", "infant"]},
+    {"name": "Allergy relief", "category": "Medicine", "search": "allergy relief", "unit": "ct", "aliases": ["allergy", "zyrtec", "claritin", "allegra", "cetirizine", "loratadine"], "must_include": [], "must_not_include": ["kids", "children"]},
+
+    {"name": "Eggs", "category": "Groceries", "search": "eggs", "unit": "dozen", "target": 1.65, "aliases": ["egg", "dozen eggs"], "must_include": ["egg"], "must_not_include": ["noodles", "chocolate", "nog", "beaters", "roll", "cooker"]},
+    {"name": "Chicken breast", "category": "Groceries", "search": "chicken breast", "unit": "lb", "target": 2.59, "aliases": ["chicken", "boneless chicken"], "must_include": ["chicken", "breast"], "must_not_include": ["nuggets", "breaded", "fried", "canned", "soup", "dog"]},
+    {"name": "Frozen berries", "category": "Groceries", "search": "frozen berries", "unit": "lb", "target": 2.54, "aliases": ["berries", "frozen fruit", "blueberries", "strawberries"], "must_include": ["berr"], "must_not_include": ["juice", "yogurt", "cereal", "candy", "pie"]},
+    {"name": "Kiwi", "category": "Groceries", "search": "kiwi", "unit": "lb", "target": 2.62, "aliases": ["kiwifruit"], "must_include": ["kiwi"], "must_not_include": ["juice", "strawberry kiwi", "drink"]},
+    {"name": "Walnuts", "category": "Groceries", "search": "walnuts", "unit": "lb", "target": 3.34, "aliases": ["walnut"], "must_include": ["walnut"], "must_not_include": ["brownie", "cookie"]},
+    {"name": "Almonds", "category": "Groceries", "search": "almonds", "unit": "lb", "target": 4.96, "aliases": ["almond"], "must_include": ["almond"], "must_not_include": ["milk", "butter", "joy", "chocolate", "bar"]}
   ],
+  "catalog_terms": ["milk", "bread", "cereal", "coffee", "rice", "pasta", "cheese", "yogurt", "butter", "bananas", "apples", "ground beef", "bacon", "peanut butter", "oatmeal", "tuna", "beans", "frozen vegetables", "potatoes", "onions", "water", "razors", "shaving cream", "lip balm", "cotton swabs", "bandages", "cold medicine", "vitamins", "hand sanitizer", "bleach", "sponges", "aluminum foil", "zip bags", "batteries", "light bulbs", "paper plates"],
   "free_scan_terms": ["ExtraBucks", "Register Rewards", "free", "BOGO", "cash back"]
 }
