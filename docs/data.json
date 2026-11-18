@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T01:38",
+ "updated": "2026-11-18T01:41",
  "zip": "43213",
  "items": [
   {
@@ -1496,9 +1496,9 @@
      "net": 6.99,
      "size": null,
      "per_unit": null,
-     "note": "mperks -$1",
-     "valid_to": "2026-11-27",
-     "image": "https://f.wishabi.net/page_items/440162551/1794352873/extra_large.jpg"
+     "note": "",
+     "valid_to": "2026-11-18",
+     "image": "https://f.wishabi.net/page_items/439592714/1793758952/extra_large.jpg"
     },
     {
      "store": "Meijer",
@@ -1511,9 +1511,9 @@
      "net": 6.99,
      "size": null,
      "per_unit": null,
-     "note": "",
-     "valid_to": "2026-11-18",
-     "image": "https://f.wishabi.net/page_items/439592714/1793758952/extra_large.jpg"
+     "note": "mperks -$1",
+     "valid_to": "2026-11-27",
+     "image": "https://f.wishabi.net/page_items/440162551/1794352873/extra_large.jpg"
     },
     {
      "store": "Meijer",
