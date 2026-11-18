@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Better Deals</title>
+<style>
+  :root { --bg:#f6f5f1; --card:#fff; --ink:#1d1d1b; --mute:#6b6b66; --line:#e3e1da;
+          --good:#1f7a4d; --ok:#9a6b00; --bad:#a23b2a; --accent:#2c4a7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141413; --card:#1e1e1c; --ink:#eeede8; --mute:#a3a29b; --line:#33322f; }
+  }
+  * { box-sizing:border-box }
+  body { margin:0; font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--ink) }
+  header { padding:18px 16px 8px; max-width:1000px; margin:auto }
+  h1 { margin:0; font-size:22px } .sub { color:var(--mute); font-size:13px }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; padding:8px 16px; max-width:1000px; margin:auto }
+  input, select { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink) }
+  input { flex:1; min-width:180px }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; padding:4px 16px; max-width:1000px; margin:auto }
+  .tab { border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 12px; cursor:pointer; font-size:13px }
+  .tab.on { background:var(--accent); color:#fff; border-color:var(--accent) }
+  main { max-width:1000px; margin:auto; padding:8px 16px 40px; display:grid; gap:10px }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px }
+  .top { display:flex; justify-content:space-between; gap:10px; align-items:baseline; flex-wrap:wrap }
+  .name { font-weight:650; font-size:16px } .cat { color:var(--mute); font-size:12px; text-transform:uppercase; letter-spacing:.04em }
+  .pill { font-size:12px; padding:2px 8px; border-radius:999px; font-weight:600 }
+  .BUY { background:#1f7a4d22; color:var(--good) } .ok { background:#9a6b0022; color:var(--ok) }
+  .skip { background:#a23b2a22; color:var(--bad) } .none { background:#8882; color:var(--mute) }
+  .low { background:#2c4a7a22; color:var(--accent) }
+  .best { margin:6px 0 2px } .mute { color:var(--mute); font-size:13px }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px }
+  th, td { text-align:left; padding:5px 6px; border-top:1px solid var(--line); vertical-align:top }
+  th { color:var(--mute); font-weight:500 } td.num { text-align:right; white-space:nowrap }
+  details summary { cursor:pointer; color:var(--accent); font-size:13px; margin-top:6px }
+  svg.spark { width:120px; height:28px }
+</style>
+</head>
+<body>
+<header>
+  <h1>Better Deals</h1>
+  <div class="sub" id="updated">Loading…</div>
+</header>
+<div class="bar">
+  <input id="q" placeholder="Search an item, brand or store…">
+  <select id="stype"><option value="">All store types</option></select>
+  <select id="sort">
+    <option value="pct">Biggest savings first</option>
+    <option value="name">A–Z</option>
+  </select>
+</div>
+<div class="tabs" id="tabs"></div>
+<main id="list"></main>
+
+<script>
+const $ = s => document.querySelector(s);
+let DATA = null, cat = "all";
+const fmt = n => n == null ? "—" : "$" + Number(n).toFixed(2);
+const pu = (n, u) => n == null ? "—" : "$" + Number(n).toFixed(3) + "/" + u.replace("_", " ");
+
+function spark(hist) {
+  if (!hist || hist.length < 2) return "";
+  const v = hist.map(p => p.pu), mn = Math.min(...v), mx = Math.max(...v), r = (mx - mn) || 1;
+  const pts = v.map((y, i) => `${(i / (v.length - 1)) * 118 + 1},${27 - ((y - mn) / r) * 25}`).join(" ");
+  return `<svg class="spark" viewBox="0 0 120 28"><polyline fill="none" stroke="currentColor" stroke-width="1.5" points="${pts}"/></svg>`;
+}
+
+function pillClass(v) {
+  if (v.startsWith("BUY")) return "BUY"; if (v.startsWith("ok")) return "ok";
+  if (v.startsWith("skip")) return "skip"; return "none";
+}
+
+function offerRows(offers, unit, stype) {
+  return offers.filter(o => !stype || o.store_type === stype).map(o => `
+    <tr><td>${o.store}<div class="mute">${o.store_type}</div></td>
+    <td>${o.product}${o.note ? `<div class="mute">${o.note}</div>` : ""}</td>
+    <td class="num">${fmt(o.shelf)}</td>
+    <td class="num">${o.printed_off || o.reward_back || o.manual_off ? "−" + fmt((o.printed_off||0) + (o.reward_back||0) + (o.manual_off||0)) : ""}</td>
+    <td class="num"><b>${fmt(o.net)}</b></td>
+    <td class="num">${pu(o.per_unit, unit)}</td></tr>`).join("");
+}
+
+function render() {
+  if (!DATA) return;
+  const q = $("#q").value.trim().toLowerCase(), stype = $("#stype").value;
+  let html = "";
+
+  if (cat === "free" || cat === "all") {
+    const free = DATA.free.filter(f => (!stype || f.store_type === stype) &&
+      (!q || JSON.stringify(f).toLowerCase().includes(q)));
+    if (free.length) html += `<div class="card"><div class="top"><span class="name">Free / almost free</span>
+      <span class="mute">${free.length} found</span></div><table>
+      <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Back</th><th class="num">Net</th></tr>
+      ${free.slice(0, cat === "free" ? 200 : 8).map(f => `<tr><td>${f.store}<div class="mute">${f.store_type}</div></td>
+      <td>${f.product}<div class="mute">${f.note || ""} ${f.valid_to ? "· ends " + f.valid_to : ""}</div></td>
+      <td class="num">${fmt(f.shelf)}</td><td class="num">−${fmt((f.printed_off||0) + (f.reward_back||0))}</td><td class="num"><b>${fmt(f.net)}</b></td></tr>`).join("")}
+      </table>${cat !== "free" && free.length > 8 ? `<div class="mute" style="margin-top:6px">Tap the “Free” tab for all ${free.length}.</div>` : ""}</div>`;
+  }
+
+  if (cat !== "free") {
+    let items = DATA.items.filter(i => (cat === "all" || i.category === cat) &&
+      (!q || JSON.stringify(i).toLowerCase().includes(q)));
+    if ($("#sort").value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
+    else items.sort((a, b) => (b.pct_vs_baseline ?? -999) - (a.pct_vs_baseline ?? -999));
+
+    html += items.map(i => {
+      const b = i.best;
+      const rows = offerRows(i.offers, i.unit, stype);
+      return `<div class="card">
+        <div class="top"><div><span class="name">${i.name}</span> <span class="cat">${i.category}</span></div>
+          <div><span class="pill ${pillClass(i.verdict)}">${i.verdict}</span>
+          ${i.at_90d_low ? '<span class="pill low">90-day low</span>' : ""}</div></div>
+        ${b ? `<div class="best"><b>${b.store}</b> — ${fmt(b.net)} net · ${pu(b.per_unit, i.unit)}
+          ${i.pct_vs_baseline != null ? ` · <b>${i.pct_vs_baseline}%</b> vs regular` : ""}</div>
+          <div class="mute">${b.product}${b.note ? " · " + b.note : ""}${b.valid_to ? " · ends " + b.valid_to : ""}</div>`
+          : `<div class="mute best">No weekly-ad deal found.</div>`}
+        <div class="mute">Regular best: ${i.baseline ? `${i.baseline.store} ${pu(i.baseline.per_unit, i.unit)}` : "not set (add to baseline.csv)"}
+          ${i.low_90d ? ` · 90-day low ${pu(i.low_90d, i.unit)}` : ""} ${spark(i.history)}</div>
+        ${rows ? `<details><summary>All stores (${i.offers.length})</summary><table>
+          <tr><th>Store</th><th>Product</th><th class="num">Shelf</th><th class="num">Off</th><th class="num">Net</th><th class="num">Per unit</th></tr>
+          ${rows}</table></details>` : ""}
+      </div>`;
+    }).join("");
+  }
+  $("#list").innerHTML = html || `<div class="card mute">Nothing matches.</div>`;
+}
+
+fetch("data.json?" + Date.now()).then(r => r.json()).then(d => {
+  DATA = d;
+  $("#updated").textContent = `Updated ${d.updated} · ZIP ${d.zip}` + (d.errors?.length ? ` · ${d.errors.length} search errors` : "");
+  const cats = ["all", ...new Set(d.items.map(i => i.category)), "free"];
+  $("#tabs").innerHTML = cats.map(c => `<button class="tab ${c === cat ? "on" : ""}" data-c="${c}">${c === "free" ? "Free / near free" : c}</button>`).join("");
+  $("#tabs").onclick = e => { if (!e.target.dataset.c) return; cat = e.target.dataset.c;
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.c === cat)); render(); };
+  const types = new Set(); d.items.forEach(i => i.offers.forEach(o => types.add(o.store_type))); d.free.forEach(f => types.add(f.store_type));
+  $("#stype").innerHTML += [...types].sort().map(t => `<option>${t}</option>`).join("");
+  render();
+}).catch(() => $("#updated").textContent = "No data yet — run the 'Update deals' workflow once on GitHub.");
+["#q", "#stype", "#sort"].forEach(s => $(s).addEventListener("input", render));
+</script>
+</body>
+</html>

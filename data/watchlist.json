@@ -1,0 +1,29 @@
+{
+  "_how_to_edit": "One entry per staple. 'search' is what gets typed into Flipp. 'unit' is how prices are compared (oz, fl_oz, ct, load, roll, sheet). Every 'must_include' word must appear in the ad name. Any whole word in 'must_not_include' rejects it. 'min_size' can reject travel sizes. Add or delete freely.",
+  "zip": "43213",
+  "items": [
+    {"name": "Toothpaste", "category": "oral", "search": "toothpaste", "unit": "oz", "must_include": ["toothpaste"], "must_not_include": ["kids", "travel", "trial"], "min_size": 2.5},
+    {"name": "Mouthwash", "category": "oral", "search": "mouthwash", "unit": "fl_oz", "must_include": ["mouthwash"], "must_not_include": ["kids", "travel", "trial"], "min_size": 8},
+    {"name": "Toothbrush", "category": "oral", "search": "toothbrush", "unit": "ct", "must_include": ["toothbrush"], "must_not_include": ["kids", "travel"]},
+    {"name": "Floss", "category": "oral", "search": "dental floss", "unit": "ct", "must_include": ["floss"], "must_not_include": ["kids", "travel", "meat", "chicken", "pork", "beef", "cake"]},
+
+    {"name": "Face wash", "category": "face", "search": "facial cleanser", "unit": "fl_oz", "must_include": ["facial"], "must_not_include": ["travel", "trial", "gift"], "min_size": 2},
+    {"name": "Face moisturizer", "category": "face", "search": "facial moisturizer", "unit": "fl_oz", "must_include": ["facial", "moisturizer"], "must_not_include": ["travel", "trial", "gift"], "min_size": 1},
+    {"name": "Sunscreen", "category": "face", "search": "sunscreen", "unit": "fl_oz", "must_include": ["sunscreen"], "must_not_include": ["travel", "trial"], "min_size": 2},
+
+    {"name": "Shampoo", "category": "hair", "search": "shampoo", "unit": "fl_oz", "must_include": ["shampoo"]},
+    {"name": "Conditioner", "category": "hair", "search": "conditioner", "unit": "fl_oz", "must_include": ["conditioner"]},
+
+    {"name": "Body wash", "category": "skin", "search": "body wash", "unit": "fl_oz", "must_include": ["body", "wash"], "must_not_include": ["travel", "trial", "gift"], "min_size": 8},
+    {"name": "Body lotion", "category": "skin", "search": "body lotion", "unit": "fl_oz", "must_include": ["body", "lotion"], "must_not_include": ["travel", "trial", "gift"], "min_size": 4},
+    {"name": "Deodorant", "category": "skin", "search": "deodorant", "unit": "oz", "must_include": ["deodorant"], "must_not_include": ["travel", "trial"], "min_size": 1.5},
+    {"name": "Bar soap", "category": "skin", "search": "bar soap", "unit": "ct", "must_include": ["bar", "soap"], "must_not_include": ["travel", "trial", "gift"], "size_keywords": ["bar soap"]},
+
+    {"name": "Laundry detergent", "category": "household", "search": "laundry detergent", "unit": "load", "must_include": ["laundry"], "must_not_include": ["travel"]},
+    {"name": "Paper towels", "category": "household", "search": "paper towels", "unit": "roll", "must_include": ["paper", "towels"]},
+    {"name": "Toilet paper", "category": "household", "search": "toilet paper", "unit": "roll", "must_include": ["toilet", "paper"]},
+    {"name": "Dish soap", "category": "household", "search": "dish soap", "unit": "fl_oz", "must_include": ["dish", "soap"], "min_size": 8},
+    {"name": "Trash bags", "category": "household", "search": "trash bags", "unit": "ct", "must_include": ["trash", "bags"]}
+  ],
+  "free_scan_terms": ["ExtraBucks", "Register Rewards", "free", "BOGO", "cash back"]
+}

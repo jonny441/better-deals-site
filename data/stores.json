@@ -1,0 +1,22 @@
+{
+  "_how_to_edit": "Maps the store name as Flipp shows it to a store type. Unknown stores show as 'other'. Match is case-insensitive and by 'contains'.",
+  "types": {
+    "CVS": "drugstore",
+    "Walgreens": "drugstore",
+    "Dollar General": "dollar store",
+    "Family Dollar": "dollar store",
+    "Dollar Tree": "dollar store",
+    "Kroger": "grocery",
+    "ALDI": "grocery",
+    "Giant Eagle": "grocery",
+    "Meijer": "big box",
+    "Target": "big box",
+    "Walmart": "big box",
+    "Sam's Club": "warehouse",
+    "Costco": "warehouse",
+    "BJ's": "warehouse",
+    "Ollie's": "off-price",
+    "Big Lots": "off-price",
+    "Five Below": "off-price"
+  }
+}
