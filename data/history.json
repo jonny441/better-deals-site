@@ -9,6 +9,11 @@
    "d": "2026-11-18",
    "pu": 0.1667,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.1667,
+   "store": "CVS Pharmacy"
   }
  ],
  "Mouthwash": [
@@ -19,6 +24,11 @@
   },
   {
    "d": "2026-11-18",
+   "pu": 0.0625,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.0625,
    "store": "Dollar General"
   }
@@ -33,6 +43,11 @@
    "d": "2026-11-18",
    "pu": 1.0,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 1.0,
+   "store": "Dollar General"
   }
  ],
  "Floss": [
@@ -43,6 +58,11 @@
   },
   {
    "d": "2026-11-18",
+   "pu": 1.0,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 1.0,
    "store": "Dollar General"
   }
@@ -60,6 +80,11 @@
    "d": "2026-11-18",
    "pu": 0.1171,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.1171,
+   "store": "CVS Pharmacy"
   }
  ],
  "Conditioner": [
@@ -72,6 +97,11 @@
    "d": "2026-11-18",
    "pu": 0.1171,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.1171,
+   "store": "CVS Pharmacy"
   }
  ],
  "Body wash": [
@@ -82,6 +112,11 @@
   },
   {
    "d": "2026-11-18",
+   "pu": 0.0625,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.0625,
    "store": "Dollar General"
   }
@@ -97,6 +132,11 @@
    "d": "2026-11-18",
    "pu": 0.3846,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.3846,
+   "store": "Dollar General"
   }
  ],
  "Bar soap": [
@@ -107,6 +147,11 @@
   },
   {
    "d": "2026-11-18",
+   "pu": 0.5967,
+   "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.5967,
    "store": "CVS Pharmacy"
   }
@@ -121,6 +166,11 @@
    "d": "2026-11-18",
    "pu": 0.0824,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.0804,
+   "store": "Dollar General"
   }
  ],
  "Paper towels": [
@@ -131,6 +181,11 @@
   },
   {
    "d": "2026-11-18",
+   "pu": 0.825,
+   "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.825,
    "store": "Dollar General"
   }
@@ -159,6 +214,11 @@
    "d": "2026-11-18",
    "pu": 0.536,
    "store": "Lowe's"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.1056,
+   "store": "Lowe's"
   }
  ],
  "Face sunscreen": [],
@@ -172,6 +232,11 @@
    "d": "2026-11-18",
    "pu": 0.1591,
    "store": "CVS Pharmacy"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.1591,
+   "store": "CVS Pharmacy"
   }
  ],
  "All-purpose cleaner": [
@@ -179,11 +244,21 @@
    "d": "2026-11-18",
    "pu": 0.025,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.025,
+   "store": "Dollar General"
   }
  ],
  "Disinfecting wipes": [
   {
    "d": "2026-11-18",
+   "pu": 0.0296,
+   "store": "Menards"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.0296,
    "store": "Menards"
   }
@@ -199,11 +274,21 @@
    "d": "2026-11-18",
    "pu": 0.002,
    "store": "Dollar General"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 0.002,
+   "store": "Dollar General"
   }
  ],
  "Allergy relief": [
   {
    "d": "2026-11-18",
+   "pu": 0.4499,
+   "store": "Walgreens"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 0.4499,
    "store": "Walgreens"
   }
@@ -214,6 +299,11 @@
    "d": "2026-11-18",
    "pu": 2.49,
    "store": "Giant Eagle"
+  },
+  {
+   "d": "2026-11-19",
+   "pu": 2.59,
+   "store": "Meijer"
   }
  ],
  "Frozen berries": [],
@@ -222,6 +312,11 @@
  "Almonds": [
   {
    "d": "2026-11-18",
+   "pu": 6.0,
+   "store": "Marc's"
+  },
+  {
+   "d": "2026-11-19",
    "pu": 6.0,
    "store": "Marc's"
   }
